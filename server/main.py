@@ -1,13 +1,16 @@
 import socketio
-from aiohttp import web
+import eventlet
 
-sio = socketio.AsyncServer()
-app = web.Application()
-sio.attach(app)
+sio = socketio.Server()
+app = socketio.WSGIApp(sio)
 
 @sio.event
 def connect(sid, environ):
 	print("Connected")
 
+@sio.event
+def set_name(sid, name):
+	print("Set name: " + name)
+
 if __name__ == "__main__":
-	web.run_app(app)
+	eventlet.wsgi.server(eventlet.listen(('', 8080)), app)

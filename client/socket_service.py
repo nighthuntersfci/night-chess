@@ -1,7 +1,10 @@
 import socketio
 
-sio = socketio.AsyncClient()
+sio = socketio.Client()
 
-async def start():
-	await sio.connect("http://localhost:8080")
-	await sio.wait()
+def set_username(name):
+	sio.emit("set_name", name)
+
+def start():
+	sio.connect("http://localhost:8080", transports=['websocket'])
+	sio.wait()

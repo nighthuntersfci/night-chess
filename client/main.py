@@ -1,7 +1,6 @@
 # Dependencies
 from tkinter import *
 import threading
-import asyncio
 import socket_service
 # Theme
 import theme
@@ -24,7 +23,7 @@ def gui_thread():
 	root.mainloop()
 
 def network_thread():
-	asyncio.run(socket_service.start())
+	socket_service.start()
 
 t1 = threading.Thread(target=gui_thread)
 t2 = threading.Thread(target=network_thread)
