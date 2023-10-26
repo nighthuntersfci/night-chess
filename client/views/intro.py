@@ -1,7 +1,7 @@
 from tkinter import *
 import socket_service
 import theme
-import asyncio
+import data
 
 class Intro(Frame):
 	def __init__(self, parent, set_view):
@@ -37,3 +37,4 @@ class Intro(Frame):
 
 	def set_username(self):
 		socket_service.set_username(self.name.get())
+		data.name = self.name.get()

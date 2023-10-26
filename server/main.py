@@ -1,3 +1,4 @@
+import data
 import socketio
 import eventlet
 
@@ -6,11 +7,12 @@ app = socketio.WSGIApp(sio)
 
 @sio.event
 def connect(sid, environ):
-	print("Connected")
+	print("User Connected: " + sid);
 
 @sio.event
 def set_name(sid, name):
-	print("Set name: " + name)
+	print("Socket " + sid + " name set: " + name)
+	data.usernames[sid] = name
 
 if __name__ == "__main__":
 	eventlet.wsgi.server(eventlet.listen(('', 8080)), app)
