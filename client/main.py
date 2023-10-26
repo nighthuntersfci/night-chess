@@ -8,9 +8,6 @@ import theme
 # Views
 from views.intro import Intro
 
-def set_view(view): 
-	pass
-
 def gui_thread():
 
 	root = Tk()
@@ -18,8 +15,9 @@ def gui_thread():
 	root.title("Night Chess: Local Multiplayer")
 	root.resizable(False, False)
 	root.configure(background=theme.background_primary)
-	
-	window = Intro(root, set_view)
+
+	Intro(root)
+		
 	root.mainloop()
 
 def network_thread():

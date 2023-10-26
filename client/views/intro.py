@@ -2,13 +2,14 @@ from tkinter import *
 import socket_service
 import theme
 import data
+from views.rooms import Rooms
 
 class Intro(Frame):
-	def __init__(self, parent, set_view):
+	def __init__(self, parent):
 		super().__init__(parent, background=theme.background_primary)
 		self.pack(fill = BOTH, expand=True)
 
-		self.set_view = set_view
+		self.parent = parent
 
 		# Top Bar
 		top = Frame(self, background=theme.background_secondary)
@@ -38,3 +39,6 @@ class Intro(Frame):
 	def set_username(self):
 		socket_service.set_username(self.name.get())
 		data.name = self.name.get()
+
+		Rooms(self.parent)
+		self.destroy()
