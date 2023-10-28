@@ -15,4 +15,4 @@ def set_name(sid, name):
 	data.usernames[sid] = name
 
 if __name__ == "__main__":
-	eventlet.wsgi.server(eventlet.listen(('', 8080)), app)
+	eventlet.wsgi.server(eventlet.listen(('', 7777)), app)
