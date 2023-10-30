@@ -7,7 +7,7 @@ app = socketio.WSGIApp(sio)
 
 @sio.event
 def connect(sid, environ):
-	print("User Connected: " + sid);
+	print("User Connected: " + sid)
 
 @sio.event
 def set_name(sid, name):
