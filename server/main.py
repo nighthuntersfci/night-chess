@@ -7,7 +7,8 @@ app = socketio.WSGIApp(sio)
 
 @sio.event
 def connect(sid, environ):
-	print("User Connected: " + sid);
+	print("User Connected: " + sid)
+	sio.emit("update_rooms", data.rooms)
 
 @sio.event
 def set_name(sid, name):
@@ -15,4 +16,4 @@ def set_name(sid, name):
 	data.usernames[sid] = name
 
 if __name__ == "__main__":
-	eventlet.wsgi.server(eventlet.listen(('', 8080)), app)
+	eventlet.wsgi.server(eventlet.listen(('', 7777)), app)
