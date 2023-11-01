@@ -59,14 +59,24 @@ class Rooms(Frame):
                 foreground=theme.text_primary,
                 font=("Arial", 16),
             ).grid(row=0, column=1, pady=5)
+            # Check the room is full or not
+            stat = NORMAL
+            if data.rooms[i]["amount"] == 2 : 
+                status = "Full"
+                stat = DISABLED 
+                color = '#3e304e'
+            else : 
+                status = "Join"
+                color = theme.color_primary
             button1 = Button(
                 room,
-                text="Join",
-                background=theme.color_primary,
+                text=status,
+                background=color,
                 foreground=theme.text_primary,
                 activebackground=theme.color_secondary,
                 activeforeground=theme.text_primary,
                 border="0",
                 width=14,
+                state=stat
             )
             button1.grid(row=0, column=2, pady=5)
