@@ -1,6 +1,8 @@
 from tkinter import *
 import theme
 import data
+import socket_service
+from views.chess_window import ChessWindow
 
 
 class Rooms(Frame):
@@ -32,6 +34,7 @@ class Rooms(Frame):
             width=20,
             activebackground=theme.color_secondary,
             activeforeground=theme.text_primary,
+            command=self.create_game
         ).grid(row=0, column=1, pady=20)
 
         # Rooms List
@@ -80,3 +83,11 @@ class Rooms(Frame):
                 state=stat
             )
             button1.grid(row=0, column=2, pady=5)
+
+    def create_game(self):
+        socket_service.sio.emit("create_room")
+
+        data.in_rooms = False
+        data.rooms_window = False
+        ChessWindow(self.parent)
+        self.destroy()

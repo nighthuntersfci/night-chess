@@ -15,5 +15,14 @@ def set_name(sid, name):
 	print("Socket " + sid + " name set: " + name)
 	data.usernames[sid] = name
 
+@sio.event
+def create_room(sid):
+	data.rooms.append({
+		"name": data.usernames[sid],
+		"amount": 1
+	})
+
+	print("Created room!")
+
 if __name__ == "__main__":
 	eventlet.wsgi.server(eventlet.listen(('', 7777)), app)
