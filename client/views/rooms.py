@@ -64,7 +64,7 @@ class Rooms(Frame):
             if data.rooms[i]["amount"] == 2 : 
                 status = "Full"
                 stat = DISABLED 
-                color = '#3e304e'
+                color = theme.disabled_button
             else : 
                 status = "Join"
                 color = theme.color_primary
