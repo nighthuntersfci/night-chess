@@ -8,7 +8,7 @@ app = socketio.WSGIApp(sio)
 @sio.event
 def connect(sid, environ):
 	print("User Connected: " + sid)
-	sio.emit("update_rooms", data.rooms)
+	sio.emit("update_rooms", data.rooms, room=sid)
 
 @sio.event
 def set_name(sid, name):
@@ -21,6 +21,7 @@ def create_room(sid):
 		"name": data.usernames[sid],
 		"amount": 1
 	})
+	sio.emit("update_rooms", data.rooms)
 
 	print("Created room!")
 
