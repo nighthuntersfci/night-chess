@@ -109,5 +109,5 @@ class Rooms(Frame):
     def create_game(self):
         socket_service.sio.emit("create_room")
 
-        ChessWindow(self.parent)
+        ChessWindow(self.parent, False)
         self.destroy()
