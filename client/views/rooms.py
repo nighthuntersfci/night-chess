@@ -86,8 +86,6 @@ class Rooms(Frame):
 
     def create_game(self):
         socket_service.sio.emit("create_room")
-
-        data.in_rooms = False
-        data.rooms_window = False
+        
         ChessWindow(self.parent)
         self.destroy()
