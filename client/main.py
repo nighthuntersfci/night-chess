@@ -11,7 +11,7 @@ from views.intro import Intro
 def gui_thread():
 
 	root = Tk()
-	root.geometry("960x540")
+	root.geometry("960x580")
 	root.title("Night Chess: Local Multiplayer")
 	root.resizable(False, False)
 	root.configure(background=theme.background_primary)
