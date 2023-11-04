@@ -1,8 +1,7 @@
 from tkinter import *
 import data
 import theme
-# 960x580"
-# 210+(540x580)+210
+
 class ChessWindow(Frame):
     def __init__(self, parent, black = False):
         

@@ -17,10 +17,13 @@ def set_name(sid, name):
 
 @sio.event
 def create_room(sid):
+	sio.emit("create_room_id", len(data.rooms) - 1, room=sid)
+	
 	data.rooms.append({
 		"name": data.usernames[sid],
 		"amount": 1
 	})
+	
 	sio.emit("update_rooms", data.rooms)
 
 	print("Created room!")
