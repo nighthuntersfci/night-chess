@@ -1,6 +1,8 @@
 from tkinter import *
 import theme
 import data
+import socket_service
+from views.chess_window import ChessWindow
 
 
 class Rooms(Frame):
@@ -13,8 +15,9 @@ class Rooms(Frame):
         # Top Bar
         top = Frame(self, background=theme.background_secondary)
         top.pack(fill=X, side="top")
-        top.grid_columnconfigure(0, weight=1)
+        top.grid_columnconfigure(0, weight=4)
         top.grid_columnconfigure(1, weight=1)
+        top.grid_columnconfigure(2, weight=1)
 
         Label(
             top,
@@ -32,14 +35,29 @@ class Rooms(Frame):
             width=20,
             activebackground=theme.color_secondary,
             activeforeground=theme.text_primary,
+            command=self.create_game
         ).grid(row=0, column=1, pady=20)
+        Button(
+            top,
+            text="Refresh",
+            background=theme.color_primary,
+            foreground=theme.text_primary,
+            border="0",
+            width=20,
+            activebackground=theme.color_secondary,
+            activeforeground=theme.text_primary,
+            command=self.refresh
+        ).grid(row=0, column=2, pady=20)
 
         # Rooms List
-        list = Frame(self, background=theme.background_primary)
-        list.pack(fill=BOTH, expand=True, side="top", padx=30, pady=20)
+        self.list = Frame(self, background=theme.background_primary)
+        self.list.pack(fill=BOTH, expand=True, side="top", padx=30, pady=20)
 
+        self.load_rooms()
+
+    def load_rooms(self):
         for i in range(len(data.rooms)):
-            room = Frame(list, background=theme.background_secondary, width=20)
+            room = Frame(self.list, background=theme.background_secondary, width=20)
             room.pack(fill=X, pady=10)
             room.grid_columnconfigure(0, weight=1)
             room.grid_columnconfigure(1, weight=1)
@@ -64,7 +82,7 @@ class Rooms(Frame):
             if data.rooms[i]["amount"] == 2 : 
                 status = "Full"
                 stat = DISABLED 
-                color = '#3e304e'
+                color = theme.disabled_button
             else : 
                 status = "Join"
                 color = theme.color_primary
@@ -80,3 +98,16 @@ class Rooms(Frame):
                 state=stat
             )
             button1.grid(row=0, column=2, pady=5)
+
+    def refresh(self):  
+        
+        for widget in self.list.winfo_children():
+            widget.destroy()
+
+        self.load_rooms()
+
+    def create_game(self):
+        socket_service.sio.emit("create_room")
+
+        ChessWindow(self.parent, False)
+        self.destroy()
