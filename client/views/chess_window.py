@@ -12,7 +12,7 @@ from pieces.King import King
 from pieces.Queen import Queen
 
 class ChessWindow(Frame):
-    def __init__(self, parent, black = False):
+    def __init__(self, parent, is_black = False):
         
         super().__init__(parent, background=theme.background_primary)
         self.pack(fill=BOTH, expand=True)
@@ -95,7 +95,10 @@ class ChessWindow(Frame):
         board_frame.grid(row=1, column=1)
         for i in range(8):
             for j in range(8):
-                x = Button(board_frame, image=self.game_pieces[7 - i][j].image, width=60, height=60, border=0)
+                if is_black == False:
+                    x = Button(board_frame, image=self.game_pieces[7 - i][j].image, width=60, height=60, border=0)
+                else:
+                    x = Button(board_frame, image=self.game_pieces[i][7 - j].image, width=60, height=60, border=0)
                 x.grid(row=i, column=j)
                 if (i + j) % 2 == 0:
                     x.configure(bg=white, activebackground=white)
