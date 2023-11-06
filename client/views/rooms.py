@@ -95,7 +95,8 @@ class Rooms(Frame):
                 activeforeground=theme.text_primary,
                 border="0",
                 width=14,
-                state=stat
+                state=stat,
+                command=lambda: self.join(i)
             )
             button1.grid(row=0, column=2, pady=5)
 
@@ -110,4 +111,8 @@ class Rooms(Frame):
         socket_service.sio.emit("create_room")
 
         ChessWindow(self.parent, False)
+        self.destroy()
+
+    def join(self, room_id):
+        ChessWindow(self.parent, True)
         self.destroy()
