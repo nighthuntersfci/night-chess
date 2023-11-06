@@ -2,7 +2,9 @@ from tkinter import *
 import data
 import theme
 
-
+# Pieces 
+from pieces.Blank import Blank
+from pieces.Pawn import Pawn
 
 class ChessWindow(Frame):
     def __init__(self, parent, black = False):
@@ -15,7 +17,18 @@ class ChessWindow(Frame):
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(2, weight=1)
         
-        image = PhotoImage(width=1, height=1)
+        image = PhotoImage(width=60, height=60)
+
+
+        self.game_pieces = [[], [], [], [], [], [], [], []]
+
+
+        for i in range(8):
+            for j in range(8):
+                self.game_pieces[i].append(Blank(i, j))
+
+        
+        self.game_pieces[1][0] = Pawn(1, 0, "B")
 
         self.parent = parent
         white = '#ffffff'
@@ -56,7 +69,10 @@ class ChessWindow(Frame):
         l=[]
         for i in range(8):
             for j in range(8):
-                x = Button(board_frame, image=image, width=60, height=60, border=0)
+                if self.game_pieces[i][j] == None:
+                    x = Button(board_frame, image=image, width=60, height=60, border=0)
+                else:
+                    x = Button(board_frame, image=self.game_pieces[i][j].image, width=60, height=60, border=0)
                 x.grid(row=i, column=j)
                 if (i + j) % 2 == 0:
                     x.configure(bg=white, activebackground=white)
