@@ -12,7 +12,8 @@ class ChessWindow(Frame):
         self.grid_columnconfigure(0, weight=1)       
         self.grid_columnconfigure(1, weight=3)
         self.grid_columnconfigure(2, weight=1)
-
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(2, weight=1)
         
         image = PhotoImage(width=1, height=1)
 
@@ -24,7 +25,7 @@ class ChessWindow(Frame):
         # =============================================
         # left side (White)
         left_side = Frame(self, background=theme.background_primary)
-        left_side.grid(row=0, column=0)
+        left_side.grid(row=1, column=0)
 
         white_name_frame = Frame(left_side, bg=white, width=170 , height=80)
         white_name_frame.grid()
@@ -38,7 +39,7 @@ class ChessWindow(Frame):
         # ==============================================
         # right side (black)
         right_side =Frame(self, background=theme.background_primary)
-        right_side.grid(row=0, column=2)
+        right_side.grid(row=1, column=2)
 
         black_name_frame = Frame(right_side, bg=black, width=170 , height=80)
         black_name_frame.grid()
@@ -51,7 +52,7 @@ class ChessWindow(Frame):
         # =============================================
         # chess board
         board_frame = Frame(self, bg=theme.color_secondary, border=0)
-        board_frame.grid(row=0, column=1)
+        board_frame.grid(row=1, column=1)
         l=[]
         for i in range(8):
             for j in range(8):
