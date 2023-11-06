@@ -5,6 +5,11 @@ import theme
 # Pieces 
 from pieces.Blank import Blank
 from pieces.Pawn import Pawn
+from pieces.Rook import Rook
+from pieces.Knight import Knight
+from pieces.Bishop import Bishop
+from pieces.King import King
+from pieces.Queen import Queen
 
 class ChessWindow(Frame):
     def __init__(self, parent, black = False):
@@ -27,12 +32,34 @@ class ChessWindow(Frame):
             for j in range(8):
                 self.game_pieces[i].append(Blank(i, j))
 
-        
-        self.game_pieces[1][0] = Pawn(1, 0, "B")
+        for i in range(8):
+            self.game_pieces[1][i] = Pawn(1, i, "W")
+            self.game_pieces[6][i] = Pawn(6, i, "B")
+
+        self.game_pieces[0][0] = Rook(0, 0, "W") 
+        self.game_pieces[0][7] = Rook(0, 7, "W") 
+        self.game_pieces[7][0] = Rook(7, 0, "B") 
+        self.game_pieces[7][7] = Rook(7, 7, "B") 
+
+        self.game_pieces[0][1] = Knight(0, 1, "W") 
+        self.game_pieces[0][6] = Knight(0, 6, "W") 
+        self.game_pieces[7][1] = Knight(7, 1, "B") 
+        self.game_pieces[7][6] = Knight(7, 6, "B") 
+
+        self.game_pieces[0][2] = Bishop(0, 1, "W") 
+        self.game_pieces[0][5] = Bishop(0, 5, "W") 
+        self.game_pieces[7][2] = Bishop(7, 1, "B") 
+        self.game_pieces[7][5] = Bishop(7, 5, "B") 
+
+        self.game_pieces[0][4] = King(0, 4, "W")
+        self.game_pieces[7][4] = King(7, 4, "B")
+
+        self.game_pieces[0][3] = Queen(0, 3, "W")
+        self.game_pieces[7][3] = Queen(7, 3, "B")
 
         self.parent = parent
         white = '#ffffff'
-        black = '#555555'
+        black = theme.color_secondary
         white_name = "Ahmed"
         black_name = "Salah"
         # =============================================
@@ -66,19 +93,14 @@ class ChessWindow(Frame):
         # chess board
         board_frame = Frame(self, bg=theme.color_secondary, border=0)
         board_frame.grid(row=1, column=1)
-        l=[]
         for i in range(8):
             for j in range(8):
-                if self.game_pieces[i][j] == None:
-                    x = Button(board_frame, image=image, width=60, height=60, border=0)
-                else:
-                    x = Button(board_frame, image=self.game_pieces[i][j].image, width=60, height=60, border=0)
+                x = Button(board_frame, image=self.game_pieces[7 - i][j].image, width=60, height=60, border=0)
                 x.grid(row=i, column=j)
                 if (i + j) % 2 == 0:
                     x.configure(bg=white, activebackground=white)
                 else:
                     x.configure(bg=black, activebackground=black)
-                l.append(x)
         # =============================================
         
         
