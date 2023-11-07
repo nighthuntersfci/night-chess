@@ -16,6 +16,10 @@ def create_room_id(id):
 	print("Created Room ID " + str(id))
 	data.current_room = id
 
+@sio.event
+def update_opponent_name(name):
+    data.room_window.update_opponent_name(name);
+
 def start():
 	sio.connect("http://localhost:7777")
 	sio.wait()

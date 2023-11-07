@@ -72,14 +72,14 @@ class Rooms(Frame):
             ).grid(row=0, column=0, pady=5)
             Label(
                 room,
-                text=(str(data.rooms[i]["amount"]) + "/2"),
+                text=(str(len(data.rooms[i]["players"])) + "/2"),
                 background=theme.background_secondary,
                 foreground=theme.text_primary,
                 font=("Arial", 16),
             ).grid(row=0, column=1, pady=5)
             # Check the room is full or not
             stat = NORMAL
-            if data.rooms[i]["amount"] == 2 : 
+            if len(data.rooms[i]["players"]) == 2: 
                 status = "Full"
                 stat = DISABLED 
                 color = theme.disabled_button
@@ -96,7 +96,7 @@ class Rooms(Frame):
                 border="0",
                 width=14,
                 state=stat,
-                command=lambda: self.join(i)
+                command=lambda: self.join(data.rooms[i], i)
             )
             button1.grid(row=0, column=2, pady=5)
 
@@ -110,9 +110,11 @@ class Rooms(Frame):
     def create_game(self):
         socket_service.sio.emit("create_room")
 
-        ChessWindow(self.parent, False)
+        data.room_window = ChessWindow(self.parent, False)
         self.destroy()
 
-    def join(self, room_id):
-        ChessWindow(self.parent, True)
+    def join(self, room, room_id):
+        socket_service.sio.emit("join", room_id)
+
+        data.room_window = ChessWindow(self.parent, True, opponent_name=room["players"][0]["name"])
         self.destroy()
