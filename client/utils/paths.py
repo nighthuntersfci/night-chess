@@ -1,6 +1,6 @@
-import pathlib, os
+import os
+
 
 def get_full_path(path):
-    current_dir = pathlib.Path().resolve()
-    value = os.path.join(current_dir, path)
+    value = os.path.join(os.path.dirname(__file__), "..", path)
     return value
