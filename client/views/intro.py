@@ -40,5 +40,5 @@ class Intro(Frame):
 		socket_service.set_username(self.name.get())
 		data.name = self.name.get()
 
-		Rooms(self.parent)
+		data.rooms_window = Rooms(self.parent)
 		self.destroy()

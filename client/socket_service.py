@@ -8,8 +8,11 @@ def set_username(name):
 
 @sio.event
 def update_rooms(rooms):
-	print("Update rooms!")
-	data.rooms = rooms
+    print("Update rooms!")
+    data.rooms = rooms
+    
+    if data.rooms_window != None:
+        data.rooms_window.refresh()
 
 @sio.event
 def create_room_id(id):
