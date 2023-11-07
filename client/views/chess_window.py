@@ -12,7 +12,7 @@ from pieces.King import King
 from pieces.Queen import Queen
 
 class ChessWindow(Frame):
-    def __init__(self, parent, is_black = False):
+    def __init__(self, parent, is_black = False, opponent_name = "Empty"):
         
         super().__init__(parent, background=theme.background_primary)
         self.pack(fill=BOTH, expand=True)
@@ -62,11 +62,11 @@ class ChessWindow(Frame):
         black = theme.color_secondary
 
         if is_black:
-            white_name = "Empty"
+            white_name = opponent_name
             black_name = data.name
         else:
             white_name = data.name
-            black_name = "Empty"
+            black_name = opponent_name
 
         # =============================================
         # left side (White)

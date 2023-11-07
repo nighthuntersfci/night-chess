@@ -96,7 +96,7 @@ class Rooms(Frame):
                 border="0",
                 width=14,
                 state=stat,
-                command=lambda: self.join(i)
+                command=lambda: self.join(data.rooms[i])
             )
             button1.grid(row=0, column=2, pady=5)
 
@@ -113,6 +113,6 @@ class Rooms(Frame):
         ChessWindow(self.parent, False)
         self.destroy()
 
-    def join(self, room_id):
-        ChessWindow(self.parent, True)
+    def join(self, room):
+        ChessWindow(self.parent, True, opponent_name=room["players"][0]["name"])
         self.destroy()
