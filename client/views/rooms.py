@@ -15,9 +15,8 @@ class Rooms(Frame):
         # Top Bar
         top = Frame(self, background=theme.background_secondary)
         top.pack(fill=X, side="top")
-        top.grid_columnconfigure(0, weight=4)
+        top.grid_columnconfigure(0, weight=1)
         top.grid_columnconfigure(1, weight=1)
-        top.grid_columnconfigure(2, weight=1)
 
         Label(
             top,
@@ -37,17 +36,6 @@ class Rooms(Frame):
             activeforeground=theme.text_primary,
             command=self.create_game
         ).grid(row=0, column=1, pady=20)
-        Button(
-            top,
-            text="Refresh",
-            background=theme.color_primary,
-            foreground=theme.text_primary,
-            border="0",
-            width=20,
-            activebackground=theme.color_secondary,
-            activeforeground=theme.text_primary,
-            command=self.refresh
-        ).grid(row=0, column=2, pady=20)
 
         # Rooms List
         self.list = Frame(self, background=theme.background_primary)
