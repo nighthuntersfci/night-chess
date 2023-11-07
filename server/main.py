@@ -34,5 +34,14 @@ def create_room(sid):
 
 	print("Created room!")
 
+@sio.event
+def join(sid, room_id):
+    data.rooms[room_id]["players"].append({
+        "name": data.usernames[sid],
+        "id": sid,
+        "color": "B"
+    })
+    sio.emit("update_opponent_name", data.usernames[sid], room=data.rooms[room_id]["players"][0]["id"])
+
 if __name__ == "__main__":
 	eventlet.wsgi.server(eventlet.listen(('', 7777)), app)
