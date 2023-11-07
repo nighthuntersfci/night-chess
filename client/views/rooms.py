@@ -72,14 +72,14 @@ class Rooms(Frame):
             ).grid(row=0, column=0, pady=5)
             Label(
                 room,
-                text=(str(data.rooms[i]["amount"]) + "/2"),
+                text=(str(len(data.rooms[i]["players"])) + "/2"),
                 background=theme.background_secondary,
                 foreground=theme.text_primary,
                 font=("Arial", 16),
             ).grid(row=0, column=1, pady=5)
             # Check the room is full or not
             stat = NORMAL
-            if data.rooms[i]["amount"] == 2 : 
+            if len(data.rooms[i]["players"]) == 2: 
                 status = "Full"
                 stat = DISABLED 
                 color = theme.disabled_button

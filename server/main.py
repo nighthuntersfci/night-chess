@@ -21,7 +21,13 @@ def create_room(sid):
 	
 	data.rooms.append({
 		"name": data.usernames[sid],
-		"amount": 1
+        "players": [
+            {
+                "name": data.usernames[sid],
+                "id": sid,
+                "color": "W"
+            },
+        ]
 	})
 	
 	sio.emit("update_rooms", data.rooms)
