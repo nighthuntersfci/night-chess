@@ -67,7 +67,7 @@ class Rooms(Frame):
             ).grid(row=0, column=1, pady=5)
             # Check the room is full or not
             stat = NORMAL
-            if len(data.rooms[i]["players"]) == 2: 
+            if len(data.rooms[i]["players"]) >= 2: 
                 status = "Full"
                 stat = DISABLED 
                 color = theme.disabled_button
