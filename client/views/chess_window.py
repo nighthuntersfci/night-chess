@@ -24,7 +24,7 @@ class ChessWindow(Frame):
         
         image = PhotoImage(width=60, height=60)
 
-
+        self.is_black = is_black
         self.game_pieces = [[], [], [], [], [], [], [], []]
 
 
@@ -60,8 +60,14 @@ class ChessWindow(Frame):
         self.parent = parent
         white = '#ffffff'
         black = theme.color_secondary
-        white_name = "Ahmed"
-        black_name = "Salah"
+
+        if is_black:
+            white_name = "Empty"
+            black_name = data.name
+        else:
+            white_name = data.name
+            black_name = "Empty"
+
         # =============================================
         # left side (White)
         left_side = Frame(self, background=theme.background_primary)
@@ -73,8 +79,8 @@ class ChessWindow(Frame):
         lab1 = Label(white_name_frame , text='White' , font=('arial' , 20 , 'bold') , fg='black' ,bg=white)
         lab1.grid(pady=(10, 0), padx=10)
 
-        lab2 = Label(white_name_frame , text=white_name , font=('arial' , 15 , 'italic') , fg='black' ,bg=white)
-        lab2.grid()
+        self.white_label = Label(white_name_frame , text=white_name , font=('arial' , 15 , 'italic') , fg='black' ,bg=white)
+        self.white_label.grid()
         
         # ==============================================
         # right side (black)
@@ -87,8 +93,8 @@ class ChessWindow(Frame):
         lab1 = Label(black_name_frame , text='black' , font=('arial' , 20 , 'bold') , fg='white' ,bg=black)
         lab1.grid(pady=(10, 0), padx=10)
 
-        lab2 = Label(black_name_frame , text=black_name , font=('arial' , 15 , 'italic') , fg='white' ,bg=black)
-        lab2.grid()
+        self.black_label = Label(black_name_frame , text=black_name , font=('arial' , 15 , 'italic') , fg='white' ,bg=black)
+        self.black_label.grid()
         # =============================================
         # chess board
         board_frame = Frame(self, bg=theme.color_secondary, border=0)
@@ -107,4 +113,8 @@ class ChessWindow(Frame):
         # =============================================
         
         
-        
+    def update_opponent_name(self, name):
+        if self.is_black:
+            self.white_label.configure(text=name)
+        else:
+            self.black_label.configure(text=name)
