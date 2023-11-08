@@ -31,12 +31,13 @@ class Intro(Frame):
 
 		Label(prompt, text="Enter Your Name:", background=theme.background_primary, foreground=theme.text_primary, font=("Arial", 30)).grid(row=1, column=1, pady=(10, 0))
 		entry = Entry(prompt, background="white", textvariable=self.name, foreground="black", font=("Arial", 15), border="0")
+		entry.bind('<Return>' , self.set_username)
 		entry.grid(row=2, column=1)
 		
 		Button(prompt, text="Enter", background=theme.color_primary, foreground=theme.text_primary, border="0", width=20, activebackground=theme.color_secondary, activeforeground=theme.text_primary, command=self.set_username).grid(row=3, column=1, pady=20)
 		
 
-	def set_username(self):
+	def set_username(self,event=0):
 		socket_service.set_username(self.name.get())
 		data.name = self.name.get()
 
