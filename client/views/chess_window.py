@@ -1,6 +1,7 @@
 from tkinter import *
 import data
 import theme
+import socket_service
 
 # Pieces 
 from pieces.Blank import Blank
@@ -162,10 +163,61 @@ class ChessWindow(Frame):
                     
                     self.about_to_move = False
                     self.about_to_move_piece = None
-                    
+               
+                    socket_service.sio.emit("update_board", {"id": data.current_room, "data": self.get_piece_data()})
+
                     self.render()
 
-            
+    def get_piece_data(self):
+        piece_data = [[], [], [], [], [], [], [], []]
+        for i in range(8):
+            for j in range(8):
+                string = ""
+                if isinstance(self.game_pieces[i][j], Pawn):
+                    string = string + "p"
+                elif isinstance(self.game_pieces[i][j], Rook):
+                    string = string + "r"
+                elif isinstance(self.game_pieces[i][j], Knight):
+                    string = string + "n"
+                elif isinstance(self.game_pieces[i][j], Bishop):
+                    string = string + "b"
+                elif isinstance(self.game_pieces[i][j], Queen):
+                    string = string + "q"
+                elif isinstance(self.game_pieces[i][j], King):
+                    string = string + "k"
+                elif isinstance(self.game_pieces[i][j], Blank):
+                    string = "  "
+
+                if self.game_pieces[i][j].color == "W":
+                    string = string + "w"
+                else:
+                    string = string + "b"
+                
+                piece_data[i].append(string)
+
+        return piece_data
+
+
+
+    def update_board(self, data):
+        for i in range(8):
+            for j in range(8):
+                if data[i][j][0] == "p":
+                    self.game_pieces[i][j] = Pawn(i, j, data[i][j][1].upper())
+                elif data[i][j][0] == "r":
+                    self.game_pieces[i][j] = Rook(i, j, data[i][j][1].upper())
+                elif data[i][j][0] == "k":
+                    self.game_pieces[i][j] = Knight(i, j, data[i][j][1].upper())
+                elif data[i][j][0] == "b":
+                    self.game_pieces[i][j] = Bishop(i, j, data[i][j][1].upper())
+                elif data[i][j][0] == "q":
+                    self.game_pieces[i][j] = Queen(i, j, data[i][j][1].upper())
+                elif data[i][j][0] == "k":
+                    self.game_pieces[i][j] = King(i, j, data[i][j][1].upper())
+                else:
+                    self.game_pieces[i][j] = Blank(i, j)
+
+        self.render()
 
     def update_opponent_name(self, name):
         if self.is_black:

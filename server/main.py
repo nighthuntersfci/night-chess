@@ -17,7 +17,7 @@ def set_name(sid, name):
 
 @sio.event
 def create_room(sid):
-	sio.emit("create_room_id", len(data.rooms) - 1, room=sid)
+	sio.emit("create_room_id", len(data.rooms), room=sid)
 	
 	data.rooms.append({
 		"name": data.usernames[sid],
@@ -42,6 +42,14 @@ def join(sid, room_id):
         "color": "B"
     })
     sio.emit("update_opponent_name", data.usernames[sid], room=data.rooms[room_id]["players"][0]["id"])
+
+@sio.event
+def update_board(sid, game_data):
+    for i in data.rooms[game_data["id"]]["players"]:
+        if i["id"] != sid:
+            sio.emit("update_board", game_data["data"], room=i["id"])
+            break
+    
 
 if __name__ == "__main__":
 	eventlet.wsgi.server(eventlet.listen(('', 7777)), app)
