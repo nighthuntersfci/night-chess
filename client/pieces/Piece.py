@@ -7,3 +7,6 @@ class Piece:
         self.y = y
         self.image = PhotoImage(file = paths.get_full_path(image))
         self.color = color
+
+    def get_moves(self, data):
+        pass
