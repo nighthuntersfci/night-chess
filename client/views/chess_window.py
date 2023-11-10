@@ -31,6 +31,8 @@ class ChessWindow(Frame):
         self.is_black = is_black
         self.game_pieces = [[], [], [], [], [], [], [], []]
         self.buttons = [[], [], [], [], [], [], [], []]
+        self.about_to_move = False
+        self.about_to_move_piece = False
 
         for i in range(8):
             for j in range(8):
@@ -126,7 +128,13 @@ class ChessWindow(Frame):
                     self.buttons[i][j].configure(bg=white, activebackground=white)
                 else:
                     self.buttons[i][j].configure(bg=black, activebackground=black)
-
+    def render(self): 
+        for i in range(8):
+            for j in range(8):
+                if self.is_black:
+                    self.buttons[i][j].configure(image=self.game_pieces[i][7 - j].image)
+                else: 
+                    self.buttons[i][j].configure(image=self.game_pieces[7 - i][j].image)
     def click(self, x, y):
         piece = self.game_pieces[x][y]
 
@@ -136,8 +144,28 @@ class ChessWindow(Frame):
             for i in piece.get_moves(self.game_pieces):
                 if self.is_black and piece.color == "B": 
                     self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="yellow", activebackground="orange")
+                    self.about_to_move = True
+                    self.about_to_move_piece = piece
                 elif not self.is_black and piece.color == "W":
                     self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="yellow", activebackground="gold")
+                    self.about_to_move = True
+                    self.about_to_move_piece = piece
+                
+        if self.about_to_move:
+            for i in self.about_to_move_piece.get_moves(self.game_pieces):
+                if [x, y] == [self.about_to_move_piece.x + i[0], self.about_to_move_piece.y + i[1]]:
+                    
+                    self.game_pieces[self.about_to_move_piece.x][self.about_to_move_piece.y] = Blank(self.about_to_move_piece.x, self.about_to_move_piece.y)
+                    self.game_pieces[x][y] = self.about_to_move_piece
+                    self.game_pieces[x][y].x = x
+                    self.game_pieces[x][y].y = y
+                    
+                    self.about_to_move = False
+                    self.about_to_move_piece = None
+                    
+                    self.render()
+
+            
 
     def update_opponent_name(self, name):
         if self.is_black:
