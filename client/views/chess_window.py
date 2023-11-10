@@ -132,12 +132,12 @@ class ChessWindow(Frame):
 
         self.recolor()
         
-        if not isinstance(piece, Blank)
+        if not isinstance(piece, Blank):
             for i in piece.get_moves():
-                if self.is_black: 
-                    self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="yellow")
-                else:
-                    self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="yellow")
+                if self.is_black and piece.color == "B": 
+                    self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="yellow", activebackground="orange")
+                elif not self.is_black and piece.color == "W":
+                    self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="yellow", activebackground="gold")
 
     def update_opponent_name(self, name):
         if self.is_black:
