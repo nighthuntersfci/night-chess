@@ -45,10 +45,10 @@ class ChessWindow(Frame):
         self.game_pieces[7][0] = Rook(7, 0, "B") 
         self.game_pieces[7][7] = Rook(7, 7, "B") 
 
-        self.game_pieces[0][1] = Knight(0, 1, "W") 
-        self.game_pieces[0][6] = Knight(0, 6, "W") 
-        self.game_pieces[7][1] = Knight(7, 1, "B") 
-        self.game_pieces[7][6] = Knight(7, 6, "B") 
+        #self.game_pieces[0][1] = Knight(0, 1, "W") 
+        #self.game_pieces[0][6] = Knight(0, 6, "W") 
+        #self.game_pieces[7][1] = Knight(7, 1, "B") 
+        #self.game_pieces[7][6] = Knight(7, 6, "B") 
 
         self.game_pieces[0][2] = Bishop(0, 1, "W") 
         self.game_pieces[0][5] = Bishop(0, 5, "W") 
@@ -133,7 +133,7 @@ class ChessWindow(Frame):
         self.recolor()
         
         if not isinstance(piece, Blank):
-            for i in piece.get_moves():
+            for i in piece.get_moves(self.game_pieces):
                 if self.is_black and piece.color == "B": 
                     self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="yellow", activebackground="orange")
                 elif not self.is_black and piece.color == "W":

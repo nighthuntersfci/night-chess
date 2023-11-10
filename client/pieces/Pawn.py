@@ -6,7 +6,7 @@ class Pawn(Piece):
             super().__init__(x, y, "assets/w_p.png", color)
         else:
             super().__init__(x, y, "assets/b_p.png", color)
-    def get_moves(self):
+    def get_moves(self, data):
         moves = []
         if self.color == "W":
             moves.append([1, 0])
