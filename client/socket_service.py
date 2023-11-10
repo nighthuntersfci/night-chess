@@ -21,7 +21,11 @@ def create_room_id(id):
 
 @sio.event
 def update_opponent_name(name):
-    data.room_window.update_opponent_name(name);
+    data.room_window.update_opponent_name(name)
+
+@sio.event
+def update_board(game_data):
+    data.room_window.update_board(game_data)
 
 def start():
 	sio.connect("http://localhost:7777")

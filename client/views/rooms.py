@@ -84,7 +84,7 @@ class Rooms(Frame):
                 border="0",
                 width=14,
                 state=stat,
-                command=lambda: self.join(data.rooms[i], i)
+                command=lambda i=i: self.join(data.rooms[i], i)
             )
             button1.grid(row=0, column=2, pady=5)
 
@@ -104,5 +104,6 @@ class Rooms(Frame):
     def join(self, room, room_id):
         socket_service.sio.emit("join", room_id)
 
+        data.current_room = room_id
         data.room_window = ChessWindow(self.parent, True, opponent_name=room["players"][0]["name"])
         self.destroy()
