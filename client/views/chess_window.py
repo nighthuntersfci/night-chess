@@ -31,7 +31,6 @@ class ChessWindow(Frame):
         self.is_black = is_black
         self.game_pieces = [[], [], [], [], [], [], [], []]
         self.buttons = [[], [], [], [], [], [], [], []]
-        self.board_frame = None
 
         for i in range(8):
             for j in range(8):
@@ -100,37 +99,45 @@ class ChessWindow(Frame):
         self.black_label.grid()
                 
 
-        self.render()
-
-    def render(self): 
-        if self.board_frame != None:
-            self.board_frame.destroy()
- 
-        self.board_frame = Frame(self, bg=theme.color_secondary, border=0)
-        self.board_frame.grid(row=1, column=1)
+        # =============================================
+        # chess board
+        board_frame = Frame(self, bg=theme.color_secondary, border=0)
+        board_frame.grid(row=1, column=1)
         for i in range(8):
             for j in range(8):
-                if self.is_black == False:
-                    x = Button(self.board_frame, image=self.game_pieces[7 - i][j].image, width=60, height=60, border=0)
+                if is_black == False:
+                    x = Button(board_frame, image=self.game_pieces[7 - i][j].image, width=60, height=60, border=0)
                     x.configure(command=lambda i=i, j=j: self.click(7 - i, j))
                 else:
-                    x = Button(self.board_frame, image=self.game_pieces[i][7 - j].image, width=60, height=60, border=0)
+                    x = Button(board_frame, image=self.game_pieces[i][7 - j].image, width=60, height=60, border=0)
                     x.configure(command=lambda i=i, j=j: self.click(i, 7 - j))
+                    
                 x.grid(row=i, column=j)
                 self.buttons[i].append(x)
                 if (i + j) % 2 == 0:
                     x.configure(bg=white, activebackground=white)
                 else:
                     x.configure(bg=black, activebackground=black)
+    
+    def recolor(self):
+        for i in range(8):
+            for j in range(8):
+                if (i + j) % 2 == 0:
+                    self.buttons[i][j].configure(bg=white, activebackground=white)
+                else:
+                    self.buttons[i][j].configure(bg=black, activebackground=black)
 
     def click(self, x, y):
         piece = self.game_pieces[x][y]
 
-        for i in piece.get_moves():
-            if self.is_black: 
-                self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="yellow")
-            else:
-                self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="yellow")
+        self.recolor()
+        
+        if not isinstance(piece, Blank)
+            for i in piece.get_moves():
+                if self.is_black: 
+                    self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="yellow")
+                else:
+                    self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="yellow")
 
     def update_opponent_name(self, name):
         if self.is_black:
