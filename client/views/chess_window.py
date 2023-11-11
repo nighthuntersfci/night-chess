@@ -53,9 +53,9 @@ class ChessWindow(Frame):
         self.game_pieces[7][1] = Knight(7, 1, "B") 
         self.game_pieces[7][6] = Knight(7, 6, "B") 
 
-        self.game_pieces[0][2] = Bishop(0, 1, "W") 
+        self.game_pieces[0][2] = Bishop(0, 2, "W") 
         self.game_pieces[0][5] = Bishop(0, 5, "W") 
-        self.game_pieces[7][2] = Bishop(7, 1, "B") 
+        self.game_pieces[7][2] = Bishop(7, 2, "B") 
         self.game_pieces[7][5] = Bishop(7, 5, "B") 
 
         self.game_pieces[0][4] = King(0, 4, "W")
