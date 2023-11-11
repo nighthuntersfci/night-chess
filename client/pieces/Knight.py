@@ -6,8 +6,7 @@ class Knight(Piece):
             super().__init__(x, y, "assets/w_n.png", color)
         else:
             super().__init__(x, y, "assets/b_n.png", color)
-    def is_valid_position(self,x,y):
-        return 0<=x<=7 and 0<=y<=7
+   
     def get_moves(self, data):
         moves = []
             
