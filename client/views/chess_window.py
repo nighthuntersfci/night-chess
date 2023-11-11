@@ -39,7 +39,7 @@ class ChessWindow(Frame):
                 self.game_pieces[i].append(Blank(i, j))
 
         for i in range(8):
-            #self.game_pieces[1][i] = Pawn(1, i, "W")
+            self.game_pieces[1][i] = Pawn(1, i, "W")
             self.game_pieces[6][i] = Pawn(6, i, "B")
 
         self.game_pieces[0][0] = Rook(0, 0, "W") 
