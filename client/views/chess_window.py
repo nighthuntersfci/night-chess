@@ -206,7 +206,7 @@ class ChessWindow(Frame):
                     self.game_pieces[i][j] = Pawn(i, j, data[i][j][1].upper())
                 elif data[i][j][0] == "r":
                     self.game_pieces[i][j] = Rook(i, j, data[i][j][1].upper())
-                elif data[i][j][0] == "k":
+                elif data[i][j][0] == "n":
                     self.game_pieces[i][j] = Knight(i, j, data[i][j][1].upper())
                 elif data[i][j][0] == "b":
                     self.game_pieces[i][j] = Bishop(i, j, data[i][j][1].upper())
