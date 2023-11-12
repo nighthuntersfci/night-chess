@@ -14,6 +14,8 @@ class Bishop(Piece):
                     if isinstance(data[self.x+ d][self.y + d ], Blank):
                         moves.append([d,d])
                     else:
+                        if data[self.x + d][self.y + d].color != self.color:
+                            moves.append([d,d])
                         break
                 else: 
                     break
@@ -23,6 +25,8 @@ class Bishop(Piece):
                     if isinstance(data[self.x -d ][self.y -d ], Blank):
                         moves.append([-d,-d])
                     else:
+                        if data[self.x - d][self.y - d].color != self.color:
+                            moves.append([-d,-d])
                         break
                 else:
                     break
@@ -32,6 +36,8 @@ class Bishop(Piece):
                     if isinstance(data[self.x + d][self.y - d], Blank):
                         moves.append([d,-d])
                     else:
+                        if data[self.x + d][self.y - d].color != self.color:
+                            moves.append([d,-d])
                         break
                 else:
                     break
@@ -41,6 +47,8 @@ class Bishop(Piece):
                     if isinstance(data[self.x -d ][self.y + d], Blank):
                         moves.append([-d,d])
                     else:
+                        if data[self.x - d][self.y + d].color != self.color:
+                            moves.append([-d,d])
                         break
                 else:
                     break
