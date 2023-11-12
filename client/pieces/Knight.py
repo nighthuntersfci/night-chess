@@ -1,5 +1,5 @@
 from pieces.Piece import Piece
-
+from pieces.Blank import Blank
 class Knight(Piece):
     def __init__(self, x, y, color):
         if color == "W":
@@ -9,13 +9,18 @@ class Knight(Piece):
    
     def get_moves(self, data):
         moves = []
-            
-        for dx in [1,2,-1,-1]:
+        for dx in [1,-1, 2, -2]:
             for dy in [1,2,-1,-2]:
                 if abs(dx) != abs(dy):
                     new_x = self.x +dx
                     new_y = self.y +dy
                     if 0 <= new_x <=7 and 0<=new_y<=7:
-                        moves.append([dx,dy])
+                        if isinstance(data[new_x][new_y] , Blank):
+                            moves.append([dx,dy])
+                        else:
+                            if data[new_x][new_y].color != self.color:
+                                moves.append([dx,dy])
+                            else:
+                                break
           
         return moves
