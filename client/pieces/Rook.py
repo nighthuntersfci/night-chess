@@ -16,6 +16,8 @@ class Rook(Piece):
                 if isinstance(data[self.x + i][self.y], Blank):
                     moves.append([i, 0]) 
                 else:
+                    if data[self.x + i][self.y].color != self.color:
+                        moves.append([i,0])
                     break
             else: 
                 break
@@ -24,6 +26,8 @@ class Rook(Piece):
                 if isinstance(data[self.x - i][self.y], Blank):
                     moves.append([-i, 0])
                 else:
+                    if data[self.x - i][self.y].color != self.color:
+                        moves.append([-i,0])
                     break
             else:
                 break
@@ -32,6 +36,8 @@ class Rook(Piece):
                 if isinstance(data[self.x][self.y + i], Blank):
                     moves.append([0, i])
                 else:
+                    if data[self.x][self.y+i].color != self.color:
+                        moves.append([0,i])
                     break
             else:
                 break
@@ -40,6 +46,8 @@ class Rook(Piece):
                 if isinstance(data[self.x][self.y - i], Blank):
                     moves.append([0, -i])
                 else:
+                    if data[self.x][self.y-i].color != self.color:
+                        moves.append([0,-i])
                     break
             else:
                 break
