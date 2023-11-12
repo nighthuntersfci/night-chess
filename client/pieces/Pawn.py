@@ -15,10 +15,10 @@ class Pawn(Piece):
 				if self.x == 1:
 					moves.append([2, 0])
 			if 0<= self.x +1 <=7 and 0<=self.y +1 <=7:
-				if not isinstance(data[self.x+1][self.y+1],Blank):
+				if not isinstance(data[self.x+1][self.y+1],Blank) and data[self.x+1][self.y+1].color != "W":
 					moves.append([1,1])
 			if 0<= self.x +1 <=7 and 0<=self.y -1 <=7:
-				if not isinstance(data[self.x+1][self.y-1],Blank):
+				if not isinstance(data[self.x+1][self.y-1],Blank) and data[self.x+1][self.y-1].color != "W":
 					moves.append([1,-1])
 			
 		else:
@@ -27,9 +27,9 @@ class Pawn(Piece):
 				if self.x == 6:
 					moves.append([-2, 0])
 			if 0<= self.x - 1 <=7 and 0<=self.y +1 <=7:
-				if not isinstance(data[self.x-1][self.y+1],Blank):
+				if not isinstance(data[self.x-1][self.y+1],Blank) and data[self.x-1][self.y+1].color == "W":
 					moves.append([-1,1])
 			if 0<= self.x - 1 <=7 and 0<=self.y - 1 <=7:
-				if not isinstance(data[self.x-1][self.y-1],Blank):
+				if not isinstance(data[self.x-1][self.y-1],Blank) and data[self.x-1][self.y-1].color == "W":
 					moves.append([-1,-1])
 		return moves
