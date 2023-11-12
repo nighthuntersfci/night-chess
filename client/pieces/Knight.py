@@ -9,7 +9,7 @@ class Knight(Piece):
    
     def get_moves(self, data):
         moves = []
-        for dx in [1,2,-1,-1]:
+        for dx in [1,-1, 2, -2]:
             for dy in [1,2,-1,-2]:
                 if abs(dx) != abs(dy):
                     new_x = self.x +dx
