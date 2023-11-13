@@ -34,7 +34,7 @@ class ChessWindow(Frame):
         self.buttons = [[], [], [], [], [], [], [], []]
         self.about_to_move = False
         self.about_to_move_piece = False
-        self.is_turn = is_black
+        self.is_turn = False
 
         for i in range(8):
             for j in range(8):
@@ -198,7 +198,6 @@ class ChessWindow(Frame):
                 piece_data[i].append(string)
 
         return piece_data
-
 
 
     def update_board(self, data):
