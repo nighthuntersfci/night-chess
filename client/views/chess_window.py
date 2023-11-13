@@ -34,6 +34,7 @@ class ChessWindow(Frame):
         self.buttons = [[], [], [], [], [], [], [], []]
         self.about_to_move = False
         self.about_to_move_piece = False
+        self.is_turn = is_black
 
         for i in range(8):
             for j in range(8):
@@ -141,32 +142,33 @@ class ChessWindow(Frame):
 
         self.recolor()
         
-        if not isinstance(piece, Blank):
-            for i in piece.get_moves(self.game_pieces):
-                if self.is_black and piece.color == "B": 
-                    self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="yellow", activebackground="orange")
-                    self.about_to_move = True
-                    self.about_to_move_piece = piece
-                elif not self.is_black and piece.color == "W":
-                    self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="yellow", activebackground="gold")
-                    self.about_to_move = True
-                    self.about_to_move_piece = piece
-                
-        if self.about_to_move:
-            for i in self.about_to_move_piece.get_moves(self.game_pieces):
-                if [x, y] == [self.about_to_move_piece.x + i[0], self.about_to_move_piece.y + i[1]]:
+        if self.is_turn:
+            if not isinstance(piece, Blank):
+                for i in piece.get_moves(self.game_pieces):
+                    if self.is_black and piece.color == "B": 
+                        self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="yellow", activebackground="orange")
+                        self.about_to_move = True
+                        self.about_to_move_piece = piece
+                    elif not self.is_black and piece.color == "W":
+                        self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="yellow", activebackground="gold")
+                        self.about_to_move = True
+                        self.about_to_move_piece = piece
                     
-                    self.game_pieces[self.about_to_move_piece.x][self.about_to_move_piece.y] = Blank(self.about_to_move_piece.x, self.about_to_move_piece.y)
-                    self.game_pieces[x][y] = self.about_to_move_piece
-                    self.game_pieces[x][y].x = x
-                    self.game_pieces[x][y].y = y
-                    
-                    self.about_to_move = False
-                    self.about_to_move_piece = None
-               
-                    socket_service.sio.emit("update_board", {"id": data.current_room, "data": self.get_piece_data()})
+            if self.about_to_move:
+                for i in self.about_to_move_piece.get_moves(self.game_pieces):
+                    if [x, y] == [self.about_to_move_piece.x + i[0], self.about_to_move_piece.y + i[1]]:
+                        self.is_turn = False
+                        self.game_pieces[self.about_to_move_piece.x][self.about_to_move_piece.y] = Blank(self.about_to_move_piece.x, self.about_to_move_piece.y)
+                        self.game_pieces[x][y] = self.about_to_move_piece
+                        self.game_pieces[x][y].x = x
+                        self.game_pieces[x][y].y = y
+                        
+                        self.about_to_move = False
+                        self.about_to_move_piece = None
+                   
+                        socket_service.sio.emit("update_board", {"id": data.current_room, "data": self.get_piece_data()})
 
-                    self.render()
+                        self.render()
 
     def get_piece_data(self):
         piece_data = [[], [], [], [], [], [], [], []]
@@ -200,6 +202,7 @@ class ChessWindow(Frame):
 
 
     def update_board(self, data):
+        self.is_turn = True
         for i in range(8):
             for j in range(8):
                 if data[i][j][0] == "p":
@@ -220,6 +223,7 @@ class ChessWindow(Frame):
         self.render()
 
     def update_opponent_name(self, name):
+        self.is_turn = True
         if self.is_black:
             self.white_label.configure(text=name)
         else:
