@@ -20,7 +20,5 @@ class Knight(Piece):
                         else:
                             if data[new_x][new_y].color != self.color:
                                 moves.append([dx,dy])
-                            else:
-                                continue
           
         return moves
