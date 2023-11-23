@@ -146,11 +146,17 @@ class ChessWindow(Frame):
             if not isinstance(piece, Blank):
                 for i in piece.get_moves(self.game_pieces):
                     if self.is_black and piece.color == "B": 
-                        self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="yellow", activebackground="orange")
+                        if (i[0] + i[1]) % 2 == 0:
+                            self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="gray", activebackground="silver")
+                        else:
+                            self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="darkgray", activebackground="silver")
                         self.about_to_move = True
                         self.about_to_move_piece = piece
                     elif not self.is_black and piece.color == "W":
-                        self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="yellow", activebackground="gold")
+                        if (i[0] + i[1]) % 2 == 0:
+                            self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="gray", activebackground="silver")
+                        else:
+                            self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="darkgray", activebackground="silver")
                         self.about_to_move = True
                         self.about_to_move_piece = piece
                     
