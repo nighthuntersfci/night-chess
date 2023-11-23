@@ -157,7 +157,6 @@ class ChessWindow(Frame):
                             self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="gray", activebackground="silver")
                         else:
                             self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="darkgray", activebackground="silver")
-
                         self.about_to_move = True
                         self.about_to_move_piece = piece
                     
