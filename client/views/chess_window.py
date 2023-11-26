@@ -164,10 +164,19 @@ class ChessWindow(Frame):
                 for i in self.about_to_move_piece.get_moves(self.game_pieces):
                     if [x, y] == [self.about_to_move_piece.x + i[0], self.about_to_move_piece.y + i[1]]:
                         self.is_turn = False
+
                         self.game_pieces[self.about_to_move_piece.x][self.about_to_move_piece.y] = Blank(self.about_to_move_piece.x, self.about_to_move_piece.y)
                         self.game_pieces[x][y] = self.about_to_move_piece
                         self.game_pieces[x][y].x = x
                         self.game_pieces[x][y].y = y
+
+
+                        if isinstance(self.game_pieces[x][y], Pawn) and x == 7 and self.game_pieces[x][y].color == "W":
+                            self.game_pieces[x][y] = Queen(x,y,"W")
+                        elif isinstance(self.game_pieces[x][y], Pawn) and x == 0 and self.game_pieces[x][y].color == "B":
+                            self.game_pieces[x][y] = Queen(x,y,"B")
+                        
+
                         
                         self.about_to_move = False
                         self.about_to_move_piece = None
