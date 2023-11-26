@@ -3,6 +3,7 @@ from pieces.Queen import Queen
 from pieces.Rook import Rook
 from pieces.Bishop import Bishop
 from pieces.Knight import Knight
+from pieces.Pawn import Pawn
 
 class King(Piece):
     def __init__(self, x, y, color):
@@ -90,8 +91,14 @@ class King(Piece):
                                         break
                             if break_outer:
                                 break
-
-    
+                    
+                    if add == True:
+                        if self.color == "W":
+                            if isinstance(data[self.x + i[0] + 1][self.y + i[1] + 1], Pawn) or isinstance(data[self.x + i[0] + 1][self.y + i[1] - 1], Pawn):
+                                add = False
+                        else:
+                            if isinstance(data[self.x + i[0] - 1][self.y + i[1] + 1], Pawn) or isinstance(data[self.x + i[0] - 1][self.y + i[1] - 1], Pawn):
+                                add = False
                     if add: 
                         moves.append(i)
         return moves
