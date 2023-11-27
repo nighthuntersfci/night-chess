@@ -23,14 +23,14 @@ class King(Piece):
                     # Vertical Movement
                     for j in range(0,7):
                         if 0 <= self.x + i[0] + j <= 7:
-                            if isinstance(data[self.x + i[0] + j][self.y + i[1]], Queen) or isinstance(data[self.x + i[0] + j][self.y + i[1]], Rook):  
+                            if (isinstance(data[self.x + i[0] + j][self.y + i[1]], Queen) or isinstance(data[self.x + i[0] + j][self.y + i[1]], Rook)) and self.color != data[self.x + i[0] + j][self.y + i[1]].color:  
                                 add = False
                                 break
                         
                     if add == True:
                         for j in range(0, 7):
                             if 0 <= (self.x + i[0]) - j <= 7:
-                                if isinstance(data[(self.x + i[0]) - j][self.y + i[1]], Queen) or isinstance(data[(self.x + i[0]) - j][self.y + i[1]], Rook) :  
+                                if (isinstance(data[(self.x + i[0]) - j][self.y + i[1]], Queen) or isinstance(data[(self.x + i[0]) - j][self.y + i[1]], Rook)) and self.color != data[(self.x + i[0]) - j][self.y + i[1]].color:  
                                     add = False
                                     break
                     
@@ -38,14 +38,14 @@ class King(Piece):
                     if add == True:
                         for j in range(0,7):
                                 if 0 <= self.y + i[1] + j <= 7:
-                                    if isinstance(data[self.x + i[0]][self.y + i[1] + j], Queen) or isinstance(data[self.x + i[0]][(self.y + i[1]) + j], Rook):  
+                                    if (isinstance(data[self.x + i[0]][self.y + i[1] + j], Queen) or isinstance(data[self.x + i[0]][(self.y + i[1]) + j], Rook)) and self.color != data[self.x + i[0]][(self.y + i[1]) + j].color:  
                                         add = False
                                         break
                         
                     if add == True:
                         for j in range(0, 7):
                             if 0 <= (self.y + i[1]) - j <= 7:
-                                if isinstance(data[self.x + i[0]][(self.y + i[1]) - j], Queen) or isinstance(data[self.x + i[0]][(self.y + i[1]) - j], Rook) :  
+                                if (isinstance(data[self.x + i[0]][(self.y + i[1]) - j], Queen) or isinstance(data[self.x + i[0]][(self.y + i[1]) - j], Rook)) and self.color !=data[self.x + i[0]][(self.y + i[1]) - j].color:  
                                     add = False
                                     break
                     
@@ -53,14 +53,14 @@ class King(Piece):
                     if add == True:
                         for j in range(0,7):
                                 if 0 <= self.y + i[1] + j <= 7 and 0 <= self.x + i[0] + j <= 7:
-                                    if isinstance(data[self.x + i[0] + j][self.y + i[1] + j], Queen) or isinstance(data[self.x + i[0] + j][(self.y + i[1]) + j], Bishop):  
+                                    if (isinstance(data[self.x + i[0] + j][self.y + i[1] + j], Queen) or isinstance(data[self.x + i[0] + j][(self.y + i[1]) + j], Bishop)) and self.color !=data[self.x + i[0] + j][(self.y + i[1]) + j].color:  
                                         add = False
                                         break
                         
                     if add == True:
                         for j in range(0, 7):
                             if 0 <= (self.y + i[1]) - j <= 7 and 0 <= (self.x + i[0]) + j <= 7:
-                                if isinstance(data[self.x + i[0] + j][(self.y + i[1]) - j], Queen) or isinstance(data[self.x + i[0] + j][(self.y + i[1]) - j], Bishop) :  
+                                if (isinstance(data[self.x + i[0] + j][(self.y + i[1]) - j], Queen) or isinstance(data[self.x + i[0] + j][(self.y + i[1]) - j], Bishop)) and self.color !=data[self.x + i[0] + j][(self.y + i[1]) - j].color:  
                                     add = False
                                     break               
 
@@ -68,14 +68,14 @@ class King(Piece):
                     if add == True:
                         for j in range(0,7):
                                 if 0 <= self.y + i[1] - j <= 7 and 0 <= self.x + i[0] - j <= 7:
-                                    if isinstance(data[self.x + i[0] - j][self.y + i[1] - j], Queen) or isinstance(data[self.x + i[0] - j][(self.y + i[1]) - j], Bishop):  
+                                    if (isinstance(data[self.x + i[0] - j][self.y + i[1] - j], Queen) or isinstance(data[self.x + i[0] - j][(self.y + i[1]) - j], Bishop)) and self.color !=data[self.x + i[0] - j][(self.y + i[1]) - j].color:  
                                         add = False
                                         break
                         
                     if add == True:
                         for j in range(0, 7):
                             if 0 <= (self.y + i[1]) + j <= 7 and 0 <= (self.x + i[0]) - j <= 7:
-                                if isinstance(data[self.x + i[0] - j][(self.y + i[1]) + j], Queen) or isinstance(data[self.x + i[0] - j][(self.y + i[1]) + j], Bishop):  
+                                if (isinstance(data[self.x + i[0] - j][(self.y + i[1]) + j], Queen) or isinstance(data[self.x + i[0] - j][(self.y + i[1]) + j], Bishop)) and self.color !=data[self.x + i[0] - j][(self.y + i[1]) + j].color:  
                                     add = False
                                     break   
 
@@ -85,7 +85,7 @@ class King(Piece):
                             break_outer = False
                             for dy in [1, -1, 2, -2]:
                                 if abs(dx) != abs(dy):
-                                    if isinstance(data[self.x + i[0] + dx][self.y + i[1] + dy], Knight): 
+                                    if (isinstance(data[self.x + i[0] + dx][self.y + i[1] + dy], Knight)) and self.color !=data[self.x + i[0] + dx][self.y + i[1] + dy].color: 
                                         add = False
                                         break_outer = True
                                         break
@@ -94,10 +94,10 @@ class King(Piece):
                     
                     if add == True:
                         if self.color == "W":
-                            if isinstance(data[self.x + i[0] + 1][self.y + i[1] + 1], Pawn) or isinstance(data[self.x + i[0] + 1][self.y + i[1] - 1], Pawn):
+                            if (isinstance(data[self.x + i[0] + 1][self.y + i[1] + 1], Pawn) or isinstance(data[self.x + i[0] + 1][self.y + i[1] - 1], Pawn)) and self.color !=data[self.x + i[0] + 1][self.y + i[1] + 1].color:
                                 add = False
                         else:
-                            if isinstance(data[self.x + i[0] - 1][self.y + i[1] + 1], Pawn) or isinstance(data[self.x + i[0] - 1][self.y + i[1] - 1], Pawn):
+                            if (isinstance(data[self.x + i[0] - 1][self.y + i[1] + 1], Pawn) or isinstance(data[self.x + i[0] - 1][self.y + i[1] - 1], Pawn)) and self.color !=data[self.x + i[0] - 1][self.y + i[1] + 1].color:
                                 add = False
                     if add: 
                         moves.append(i)
