@@ -248,11 +248,11 @@ class ChessWindow(Frame):
             self.black_label.configure(text=name)
 
     def check_for_check(self):
-        print("CHECKING FOR CHECKS")
+
         for i in range(8):
             for j in range(8):
                 if isinstance(self.game_pieces[i][j], King) and ((self.is_black and self.game_pieces[i][j].color == "B") or (not self.is_black and self.game_pieces[i][j].color == "W")):
-                    print("IDENTIFIED KING:", self.game_pieces[i][j].color)
+
                     if is_in_danger(self.game_pieces[i][j].x, self.game_pieces[i][j].y, self.game_pieces[i][j].color, self.game_pieces):
-                        print("KING IS IN DANGER, CHECK!")
+  
                         self.checked = True
