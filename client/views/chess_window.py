@@ -2,6 +2,7 @@ from tkinter import *
 import data
 import theme
 import socket_service
+from utils.pieces import is_in_danger
 
 # Pieces 
 from pieces.Blank import Blank
@@ -33,8 +34,9 @@ class ChessWindow(Frame):
         self.game_pieces = [[], [], [], [], [], [], [], []]
         self.buttons = [[], [], [], [], [], [], [], []]
         self.about_to_move = False
-        self.about_to_move_piece = False
+        self.about_to_move_piece = None
         self.is_turn = False
+        self.checked = False
 
         for i in range(8):
             for j in range(8):
@@ -145,20 +147,21 @@ class ChessWindow(Frame):
         if self.is_turn:
             if not isinstance(piece, Blank):
                 for i in piece.get_moves(self.game_pieces):
-                    if self.is_black and piece.color == "B": 
-                        if (i[0] + i[1]) % 2 == 0:
-                            self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="gray", activebackground="silver")
-                        else:
-                            self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="darkgray", activebackground="silver")
-                        self.about_to_move = True
-                        self.about_to_move_piece = piece
-                    elif not self.is_black and piece.color == "W":
-                        if (i[0] + i[1]) % 2 == 0:
-                            self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="gray", activebackground="silver")
-                        else:
-                            self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="darkgray", activebackground="silver")
-                        self.about_to_move = True
-                        self.about_to_move_piece = piece
+                    if (self.checked and isinstance(piece, King)) or (not self.checked):
+                        if self.is_black and piece.color == "B": 
+                            if (i[0] + i[1]) % 2 == 0:
+                                self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="gray", activebackground="silver")
+                            else:
+                                self.buttons[piece.x + i[0]][7 - piece.y - i[1]].configure(bg="darkgray", activebackground="silver")
+                            self.about_to_move = True
+                            self.about_to_move_piece = piece
+                        elif not self.is_black and piece.color == "W":
+                            if (i[0] + i[1]) % 2 == 0:
+                                self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="gray", activebackground="silver")
+                            else:
+                                self.buttons[7 - piece.x - i[0]][piece.y + i[1]].configure(bg="darkgray", activebackground="silver")
+                            self.about_to_move = True
+                            self.about_to_move_piece = piece
                     
             if self.about_to_move:
                 for i in self.about_to_move_piece.get_moves(self.game_pieces):
@@ -170,17 +173,16 @@ class ChessWindow(Frame):
                         self.game_pieces[x][y].x = x
                         self.game_pieces[x][y].y = y
 
+                        self.checked = False
 
                         if isinstance(self.game_pieces[x][y], Pawn) and x == 7 and self.game_pieces[x][y].color == "W":
                             self.game_pieces[x][y] = Queen(x,y,"W")
                         elif isinstance(self.game_pieces[x][y], Pawn) and x == 0 and self.game_pieces[x][y].color == "B":
                             self.game_pieces[x][y] = Queen(x,y,"B")
                         
-
-                        
                         self.about_to_move = False
                         self.about_to_move_piece = None
-                   
+                
                         socket_service.sio.emit("update_board", {"id": data.current_room, "data": self.get_piece_data()})
 
                         self.render()
@@ -234,6 +236,8 @@ class ChessWindow(Frame):
                 else:
                     self.game_pieces[i][j] = Blank(i, j)
 
+        self.check_for_check()
+
         self.render()
 
     def update_opponent_name(self, name):
@@ -242,3 +246,13 @@ class ChessWindow(Frame):
             self.white_label.configure(text=name)
         else:
             self.black_label.configure(text=name)
+
+    def check_for_check(self):
+        print("CHECKING FOR CHECKS")
+        for i in range(8):
+            for j in range(8):
+                if isinstance(self.game_pieces[i][j], King) and ((self.is_black and self.game_pieces[i][j].color == "B") or (not self.is_black and self.game_pieces[i][j].color == "W")):
+                    print("IDENTIFIED KING:", self.game_pieces[i][j].color)
+                    if is_in_danger(self.game_pieces[i][j].x, self.game_pieces[i][j].y, self.game_pieces[i][j].color, self.game_pieces):
+                        print("KING IS IN DANGER, CHECK!")
+                        self.checked = True
