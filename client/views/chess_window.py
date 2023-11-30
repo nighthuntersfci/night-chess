@@ -2,7 +2,7 @@ from tkinter import *
 import data
 import theme
 import socket_service
-from utils.pieces import is_in_danger
+from utils.pieces import *
 
 # Pieces
 from pieces.Blank import Blank
@@ -253,45 +253,16 @@ class ChessWindow(Frame):
                         for i in range(8):
                             for j in range(8):
                                 if isinstance(self.game_pieces[i][j], King) and (
-                                    (self.is_black and self.game_pieces[i][j].color == "W")
-                                    or (not self.is_black and self.game_pieces[i][j].color == "B")
+                                    (
+                                        self.is_black
+                                        and self.game_pieces[i][j].color == "W"
+                                    )
+                                    or (
+                                        not self.is_black
+                                        and self.game_pieces[i][j].color == "B"
+                                    )
                                 ):
-                                    if is_in_danger(
-                                        self.game_pieces[i][j].x,
-                                        self.game_pieces[i][j].y,
-                                        self.game_pieces[i][j].color,
-                                        self.game_pieces,
-                                    ):
-
-                                        if len(self.game_pieces[i][j].get_moves(self.game_pieces)) == 0:
-                                            root = Tk()
-                                            root.resizable(False, False)
-
-                                            frame = Frame(root, background=theme.background_primary)
-                                            frame.pack()
-
-                                            lb = Label(
-                                                frame,
-                                                text= "You won",
-                                                font=("Arial", 15),
-                                                background=theme.background_primary,
-                                                foreground=theme.text_primary,
-                                            )
-                                            lb2 = Label(
-                                                frame,
-                                                text= "Game Over",
-                                                font=("Arial", 15),
-                                                background=theme.background_primary,
-                                                foreground=theme.text_primary,
-                                            )
-                                            lb.pack()
-                                            lb2.pack()
-
-                                            root.mainloop()
-
-
-
-                        
+                                    check_for_end(i, j, self.game_pieces, True)
 
     def get_piece_data(self):
         piece_data = [[], [], [], [], [], [], [], []]
@@ -367,28 +338,4 @@ class ChessWindow(Frame):
                     ):
                         self.checked = True
 
-                        if len(self.game_pieces[i][j].get_moves(self.game_pieces)) == 0:
-                            root = Tk()
-                            root.resizable(False, False)
-
-                            frame = Frame(root, background=theme.background_primary)
-                            frame.pack()
-
-                            lb = Label(
-                                frame,
-                                text= "You Lost",
-                                font=("Arial", 15),
-                                background=theme.background_primary,
-                                foreground=theme.text_primary,
-                            )
-                            lb2 = Label(
-                                frame,
-                                text= "Game Over",
-                                font=("Arial", 15),
-                                background=theme.background_primary,
-                                foreground=theme.text_primary,
-                            )
-                            lb.pack()
-                            lb2.pack()
-
-                            root.mainloop()
+                        check_for_end(i, j, self.game_pieces, False)
