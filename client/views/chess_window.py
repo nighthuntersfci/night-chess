@@ -332,12 +332,19 @@ class ChessWindow(Frame):
 
                             lb = Label(
                                 frame,
-                                text="You lost",
+                                text= "You Lost",
+                                font=("Arial", 15),
+                                background=theme.background_primary,
+                                foreground=theme.text_primary,
+                            )
+                            lb2 = Label(
+                                frame,
                                 text= "Game Over",
                                 font=("Arial", 15),
                                 background=theme.background_primary,
                                 foreground=theme.text_primary,
                             )
                             lb.pack()
+                            lb2.pack()
 
                             root.mainloop()
