@@ -249,6 +249,50 @@ class ChessWindow(Frame):
 
                         self.render()
 
+                        # Check if won
+                        for i in range(8):
+                            for j in range(8):
+                                if isinstance(self.game_pieces[i][j], King) and (
+                                    (self.is_black and self.game_pieces[i][j].color == "W")
+                                    or (not self.is_black and self.game_pieces[i][j].color == "B")
+                                ):
+                                    if is_in_danger(
+                                        self.game_pieces[i][j].x,
+                                        self.game_pieces[i][j].y,
+                                        self.game_pieces[i][j].color,
+                                        self.game_pieces,
+                                    ):
+
+                                        if len(self.game_pieces[i][j].get_moves(self.game_pieces)) == 0:
+                                            root = Tk()
+                                            root.resizable(False, False)
+
+                                            frame = Frame(root, background=theme.background_primary)
+                                            frame.pack()
+
+                                            lb = Label(
+                                                frame,
+                                                text= "You won",
+                                                font=("Arial", 15),
+                                                background=theme.background_primary,
+                                                foreground=theme.text_primary,
+                                            )
+                                            lb2 = Label(
+                                                frame,
+                                                text= "Game Over",
+                                                font=("Arial", 15),
+                                                background=theme.background_primary,
+                                                foreground=theme.text_primary,
+                                            )
+                                            lb.pack()
+                                            lb2.pack()
+
+                                            root.mainloop()
+
+
+
+                        
+
     def get_piece_data(self):
         piece_data = [[], [], [], [], [], [], [], []]
         for i in range(8):
