@@ -325,7 +325,7 @@ class ChessWindow(Frame):
 
                         if len(self.game_pieces[i][j].get_moves(self.game_pieces)) == 0:
                             root = Tk()
-                            root.resize(False, False)
+                            root.resizable(False, False)
 
                             frame = Frame(root, background=theme.background_primary)
                             frame.pack()
