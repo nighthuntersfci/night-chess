@@ -1,8 +1,0 @@
-from tkinter import *
-
-root = Tk()
-                            
-lb = Label(root,text="Game Over",font=("Arial", 15))
-lb.pack()
-
-root.mainloop()

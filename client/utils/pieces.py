@@ -7,6 +7,7 @@ from pieces.Blank import Blank
 
 from tkinter import *
 import theme
+from utils.paths import get_full_path
 
 
 def is_in_danger(x, y, color, data):
@@ -182,3 +183,99 @@ def check_for_end(i, j, data, won):
         lb2.grid(row=2, column=1)
 
         root.mainloop()
+
+
+def promote_pawn(x, y, color, data):
+
+    choice = ""
+
+    root = Tk()
+
+    def set_choice(ch):
+        choice = ch
+        root.destroy()
+
+    frame = Frame(root, background=theme.background_primary)
+    frame.pack(expand=True, fill=BOTH)
+
+    labl = Label(
+        frame,
+        text="Choose From List",
+        background=theme.background_primary,
+        foreground=theme.text_primary,
+    )
+
+    if color == "W":
+        queen_image = PhotoImage(master=root, file=get_full_path("assets/w_q.png"))
+        knight_image = PhotoImage(master=root, file=get_full_path("assets/w_n.png"))
+        bishop_image = PhotoImage(master=root, file=get_full_path("assets/w_b.png"))
+        rook_image = PhotoImage(master=root, file=get_full_path("assets/w_r.png"))
+    else:
+        queen_image = PhotoImage(master=root, file=get_full_path("assets/b_q.png"))
+        knight_image = PhotoImage(master=root, file=get_full_path("assets/b_n.png"))
+        bishop_image = PhotoImage(master=root, file=get_full_path("assets/b_b.png"))
+        rook_image = PhotoImage(master=root, file=get_full_path("assets/b_r.png"))
+
+    buttn1 = Button(
+        frame,
+        text="Queen",
+        font=("Arial", 15),
+        width=60,
+        height=60,
+        image=queen_image,
+        border=0,
+        background=theme.color_primary,
+        command=lambda: set_choice("Q")
+    )
+    buttn2 = Button(
+        frame,
+        text="Knight",
+        font=("Arial", 15),
+        width=60,
+        height=60,
+        image=knight_image,
+        border=0,
+        background=theme.color_primary,
+        command=lambda: set_choice("N")
+    )
+    buttn3 = Button(
+        frame,
+        text="Bishop",
+        font=("Arial", 15),
+        width=60,
+        height=60,
+        image=bishop_image,
+        border=0,
+        background=theme.color_primary,
+        command=lambda: set_choice("B")
+    )
+    buttn4 = Button(
+        frame,
+        text="Rook",
+        font=("Arial", 15),
+        width=60,
+        height=60,
+        image=rook_image,
+        border=0,
+        background=theme.color_primary,
+        command=lambda: set_choice("R")
+    )
+
+    labl.pack()
+
+    buttn1.pack(pady=5)
+    buttn2.pack(pady=5)
+    buttn3.pack(pady=5)
+    buttn4.pack(pady=5)
+
+
+    root.mainloop()
+
+    if choice == "Q":
+        data[x][y] = Queen(x, y, color)
+    elif choice == "N":
+        data[x][y] = Knight(x, y, color)
+    elif choice == "B":
+        data[x][y] = Bishop(x, y, color)
+    elif choice == "R":
+        data[x][y] = Rook(x, y, color)
