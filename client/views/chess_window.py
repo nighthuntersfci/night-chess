@@ -324,4 +324,20 @@ class ChessWindow(Frame):
                         self.checked = True
 
                         if len(self.game_pieces[i][j].get_moves(self.game_pieces)) == 0:
-                            print("GAME OVER")
+                            root = Tk()
+                            root.resize(False, False)
+
+                            frame = Frame(root, background=theme.background_primary)
+                            frame.pack()
+
+                            lb = Label(
+                                frame,
+                                text="You lost",
+                                text= "Game Over",
+                                font=("Arial", 15),
+                                background=theme.background_primary,
+                                foreground=theme.text_primary,
+                            )
+                            lb.pack()
+
+                            root.mainloop()
