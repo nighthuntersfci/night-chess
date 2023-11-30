@@ -185,8 +185,8 @@ def check_for_end(i, j, data, won):
         root.mainloop()
 
 
+# THIS IS UNFINISHED WORK.
 def promote_pawn(x, y, color, data):
-
     choice = ""
 
     root = Tk()
@@ -225,7 +225,7 @@ def promote_pawn(x, y, color, data):
         image=queen_image,
         border=0,
         background=theme.color_primary,
-        command=lambda: set_choice("Q")
+        command=lambda: set_choice("Q"),
     )
     buttn2 = Button(
         frame,
@@ -236,7 +236,7 @@ def promote_pawn(x, y, color, data):
         image=knight_image,
         border=0,
         background=theme.color_primary,
-        command=lambda: set_choice("N")
+        command=lambda: set_choice("N"),
     )
     buttn3 = Button(
         frame,
@@ -247,7 +247,7 @@ def promote_pawn(x, y, color, data):
         image=bishop_image,
         border=0,
         background=theme.color_primary,
-        command=lambda: set_choice("B")
+        command=lambda: set_choice("B"),
     )
     buttn4 = Button(
         frame,
@@ -258,7 +258,7 @@ def promote_pawn(x, y, color, data):
         image=rook_image,
         border=0,
         background=theme.color_primary,
-        command=lambda: set_choice("R")
+        command=lambda: set_choice("R"),
     )
 
     labl.pack()
@@ -267,7 +267,6 @@ def promote_pawn(x, y, color, data):
     buttn2.pack(pady=5)
     buttn3.pack(pady=5)
     buttn4.pack(pady=5)
-
 
     root.mainloop()
 
