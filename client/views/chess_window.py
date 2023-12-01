@@ -226,47 +226,39 @@ class ChessWindow(Frame):
 
                         self.checked = False
 
+                        self.render()
+
                         if (
                             isinstance(self.game_pieces[x][y], Pawn)
                             and x == 7
                             and self.game_pieces[x][y].color == "W"
-                        ):
-                            choice = promote_pawn(
-                                x, y, self.game_pieces[x][y].color, self.game_pieces
-                            )
-                        elif (
+                        ) or (
                             isinstance(self.game_pieces[x][y], Pawn)
                             and x == 0
                             and self.game_pieces[x][y].color == "B"
                         ):
+
+                            def set_choice(choice, frame):
+                                if choice == "Q":
+                                    self.game_pieces[x][y] = Queen(x, y, self.game_pieces[x][y].color)
+                                elif choice == "N":
+                                    self.game_pieces[x][y] = Knight(x, y, self.game_pieces[x][y].color)
+                                elif choice == "B":
+                                    self.game_pieces[x][y] = Bishop(x, y, self.game_pieces[x][y].color)
+                                elif choice == "R":
+                                    self.game_pieces[x][y] = Rook(x, y, self.game_pieces[x][y].color)
+                                
+                                frame.destroy()
+                                self.after_movement()
+
                             promote_pawn(
-                                x, y, self.game_pieces[x][y].color, self.game_pieces
+                                self,
+                                set_choice
                             )
-
-                        self.about_to_move = False
-                        self.about_to_move_piece = None
-
-                        socket_service.sio.emit(
-                            "update_board",
-                            {"id": data.current_room, "data": self.get_piece_data()},
-                        )
-
-                        self.render()
-
-                        # Check if won
-                        for i in range(8):
-                            for j in range(8):
-                                if isinstance(self.game_pieces[i][j], King) and (
-                                    (
-                                        self.is_black
-                                        and self.game_pieces[i][j].color == "W"
-                                    )
-                                    or (
-                                        not self.is_black
-                                        and self.game_pieces[i][j].color == "B"
-                                    )
-                                ):
-                                    check_for_end(i, j, self.game_pieces, True)
+                        else:
+                            self.after_movement()
+                            
+                            
 
     def get_piece_data(self):
         piece_data = [[], [], [], [], [], [], [], []]
@@ -343,3 +335,29 @@ class ChessWindow(Frame):
                         self.checked = True
 
                         check_for_end(i, j, self.game_pieces, False)
+
+    def after_movement(self):
+        self.about_to_move = False
+        self.about_to_move_piece = None
+
+        socket_service.sio.emit(
+            "update_board",
+            {"id": data.current_room, "data": self.get_piece_data()},
+        )
+
+        self.render()
+
+        # Check if won
+        for i in range(8):
+            for j in range(8):
+                if isinstance(self.game_pieces[i][j], King) and (
+                    (
+                        self.is_black
+                        and self.game_pieces[i][j].color == "W"
+                    )
+                    or (
+                        not self.is_black
+                        and self.game_pieces[i][j].color == "B"
+                    )
+                ):
+                    check_for_end(i, j, self.game_pieces, True)

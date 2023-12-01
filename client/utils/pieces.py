@@ -185,6 +185,23 @@ def check_for_end(i, j, data, won):
         root.mainloop()
 
 
-# THIS IS UNFINISHED WORK.
-def promote_pawn(x, y, color, data):
-    data[x][y] = Queen(x, y, color)
+def promote_pawn(parent, set_choice):
+    frame = Frame(parent, background=theme.background_primary)
+    frame.grid(row=0, column=1)
+
+    """
+    queen_image = PhotoImage(file=get_full_path("assets/w_q.png"))
+    knight_image = PhotoImage(file=get_full_path("assets/w_n.png"))
+    bishop_image = PhotoImage(file=get_full_path("assets/w_b.png"))
+    rook_image = PhotoImage(file=get_full_path("assets/w_r.png"))
+    """
+
+    buttn1 = Button(frame, text="Queen", command=lambda: set_choice("Q", frame))
+    buttn2 = Button(frame, text="Knight", command=lambda: set_choice("N", frame))
+    buttn3 = Button(frame, text="Bishop", command=lambda: set_choice("B", frame))
+    buttn4 = Button(frame, text="Rook", command=lambda: set_choice("R", frame))
+
+    buttn1.grid(row=0, column=0, padx=5)
+    buttn2.grid(row=0, column=1, padx=5)
+    buttn3.grid(row=0, column=2, padx=5)
+    buttn4.grid(row=0, column=3, padx=5)
