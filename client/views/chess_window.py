@@ -357,4 +357,10 @@ class ChessWindow(Frame):
                     (self.is_black and self.game_pieces[i][j].color == "W")
                     or (not self.is_black and self.game_pieces[i][j].color == "B")
                 ):
-                    check_for_end(i, j, self.game_pieces, True)
+                    if is_in_danger(
+                        self.game_pieces[i][j].x,
+                        self.game_pieces[i][j].y,
+                        self.game_pieces[i][j].color,
+                        self.game_pieces,
+                    ):
+                        check_for_end(i, j, self.game_pieces, True)
