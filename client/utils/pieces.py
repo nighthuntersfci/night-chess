@@ -185,21 +185,64 @@ def check_for_end(i, j, data, won):
         root.mainloop()
 
 
-def promote_pawn(parent, set_choice):
+def promote_pawn(parent, color, set_choice):
     frame = Frame(parent, background=theme.background_primary)
     frame.grid(row=0, column=1)
 
-    """
-    queen_image = PhotoImage(file=get_full_path("assets/w_q.png"))
-    knight_image = PhotoImage(file=get_full_path("assets/w_n.png"))
-    bishop_image = PhotoImage(file=get_full_path("assets/w_b.png"))
-    rook_image = PhotoImage(file=get_full_path("assets/w_r.png"))
-    """
+    global queen_image
+    global knight_image
+    global bishop_image
+    global rook_image
 
-    buttn1 = Button(frame, text="Queen", command=lambda: set_choice("Q", frame))
-    buttn2 = Button(frame, text="Knight", command=lambda: set_choice("N", frame))
-    buttn3 = Button(frame, text="Bishop", command=lambda: set_choice("B", frame))
-    buttn4 = Button(frame, text="Rook", command=lambda: set_choice("R", frame))
+    if color == 'W':
+        queen_image = PhotoImage(file=get_full_path("assets/w_q.png"))
+        knight_image = PhotoImage(file=get_full_path("assets/w_n.png"))
+        bishop_image = PhotoImage(file=get_full_path("assets/w_b.png"))
+        rook_image = PhotoImage(file=get_full_path("assets/w_r.png"))
+
+    else:
+        queen_image = PhotoImage(file=get_full_path("assets/b_q.png"))
+        knight_image = PhotoImage(file=get_full_path("assets/b_n.png"))
+        bishop_image = PhotoImage(file=get_full_path("assets/b_b.png"))
+        rook_image = PhotoImage(file=get_full_path("assets/b_r.png"))
+
+
+    buttn1 = Button(
+        frame,
+        image=queen_image,
+        width=60,
+        height=60,
+        border=0,
+        background=theme.text_primary,
+        command=lambda: set_choice("Q", frame),
+    )
+    buttn2 = Button(
+        frame,
+        image=knight_image,
+        width=60,
+        height=60,
+        border=0,
+        background=theme.text_primary,
+        command=lambda: set_choice("N", frame),
+    )
+    buttn3 = Button(
+        frame,
+        image=bishop_image,
+        width=60,
+        height=60,
+        border=0,
+        background=theme.text_primary,
+        command=lambda: set_choice("B", frame),
+    )
+    buttn4 = Button(
+        frame,
+        image=rook_image,
+        width=60,
+        height=60,
+        border=0,
+        background=theme.text_primary,
+        command=lambda: set_choice("R", frame),
+    )
 
     buttn1.grid(row=0, column=0, padx=5)
     buttn2.grid(row=0, column=1, padx=5)

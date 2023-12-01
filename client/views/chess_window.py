@@ -42,8 +42,8 @@ class ChessWindow(Frame):
                 self.game_pieces[i].append(Blank(i, j))
 
         for i in range(8):
-            self.game_pieces[6][i] = Pawn(6, i, "W")
-            # self.game_pieces[6][i] = Pawn(6, i, "B")
+            # self.game_pieces[1][i] = Pawn(1, i, "W")
+            self.game_pieces[1][i] = Pawn(1, i, "B")
         """
         self.game_pieces[0][0] = Rook(0, 0, "W")
         self.game_pieces[0][7] = Rook(0, 7, "W")
@@ -60,8 +60,8 @@ class ChessWindow(Frame):
         self.game_pieces[7][2] = Bishop(7, 2, "B")
         self.game_pieces[7][5] = Bishop(7, 5, "B")
 """
-        self.game_pieces[0][4] = King(0, 4, "W")
-        self.game_pieces[4][4] = King(4, 4, "B")
+        self.game_pieces[4][4] = King(4, 4, "W")
+        self.game_pieces[7][4] = King(7, 4, "B")
 
         # self.game_pieces[0][3] = Queen(0, 3, "W")
         # self.game_pieces[7][3] = Queen(7, 3, "B")
@@ -240,25 +240,28 @@ class ChessWindow(Frame):
 
                             def set_choice(choice, frame):
                                 if choice == "Q":
-                                    self.game_pieces[x][y] = Queen(x, y, self.game_pieces[x][y].color)
+                                    self.game_pieces[x][y] = Queen(
+                                        x, y, self.game_pieces[x][y].color
+                                    )
                                 elif choice == "N":
-                                    self.game_pieces[x][y] = Knight(x, y, self.game_pieces[x][y].color)
+                                    self.game_pieces[x][y] = Knight(
+                                        x, y, self.game_pieces[x][y].color
+                                    )
                                 elif choice == "B":
-                                    self.game_pieces[x][y] = Bishop(x, y, self.game_pieces[x][y].color)
+                                    self.game_pieces[x][y] = Bishop(
+                                        x, y, self.game_pieces[x][y].color
+                                    )
                                 elif choice == "R":
-                                    self.game_pieces[x][y] = Rook(x, y, self.game_pieces[x][y].color)
-                                
+                                    self.game_pieces[x][y] = Rook(
+                                        x, y, self.game_pieces[x][y].color
+                                    )
+
                                 frame.destroy()
                                 self.after_movement()
 
-                            promote_pawn(
-                                self,
-                                set_choice
-                            )
+                            promote_pawn(self, self.game_pieces[x][y].color, set_choice)
                         else:
                             self.after_movement()
-                            
-                            
 
     def get_piece_data(self):
         piece_data = [[], [], [], [], [], [], [], []]
@@ -351,13 +354,7 @@ class ChessWindow(Frame):
         for i in range(8):
             for j in range(8):
                 if isinstance(self.game_pieces[i][j], King) and (
-                    (
-                        self.is_black
-                        and self.game_pieces[i][j].color == "W"
-                    )
-                    or (
-                        not self.is_black
-                        and self.game_pieces[i][j].color == "B"
-                    )
+                    (self.is_black and self.game_pieces[i][j].color == "W")
+                    or (not self.is_black and self.game_pieces[i][j].color == "B")
                 ):
                     check_for_end(i, j, self.game_pieces, True)
