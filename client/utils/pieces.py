@@ -5,6 +5,10 @@ from pieces.Knight import Knight
 from pieces.Pawn import Pawn
 from pieces.Blank import Blank
 
+from tkinter import *
+import theme
+from utils.paths import get_full_path
+
 
 def is_in_danger(x, y, color, data):
     not_in_danger = True
@@ -137,3 +141,110 @@ def is_in_danger(x, y, color, data):
                 not_in_danger = False
 
     return not not_in_danger
+
+
+def check_for_end(i, j, data, won):
+    if len(data[i][j].get_moves(data)) == 0:
+        root = Tk()
+        root.geometry("960x540")
+        root.resizable(False, False)
+
+        frame = Frame(root, background=theme.background_primary)
+        frame.pack(fill=BOTH, expand=True)
+        frame.grid_rowconfigure(0, weight=1)
+        frame.grid_rowconfigure(3, weight=1)
+        frame.grid_columnconfigure(0, weight=1)
+        frame.grid_columnconfigure(2, weight=1)
+
+        if won == False:
+            lb = Label(
+                frame,
+                text="You Lost",
+                font=("Arial", 60),
+                background=theme.background_primary,
+                foreground="#0e0ed4",
+            )
+        else:
+            lb = Label(
+                frame,
+                text="You Won",
+                font=("Arial", 60),
+                background=theme.background_primary,
+                foreground="#0e0ed4",
+            )
+        lb2 = Label(
+            frame,
+            text="Game Over",
+            font=("Arial", 30),
+            background=theme.background_primary,
+            foreground=theme.text_primary,
+        )
+        lb.grid(row=1, column=1)
+        lb2.grid(row=2, column=1)
+
+        root.mainloop()
+
+
+def promote_pawn(parent, color, set_choice):
+    frame = Frame(parent, background=theme.background_primary)
+    frame.grid(row=0, column=1)
+
+    global queen_image
+    global knight_image
+    global bishop_image
+    global rook_image
+
+    if color == 'W':
+        queen_image = PhotoImage(file=get_full_path("assets/w_q.png"))
+        knight_image = PhotoImage(file=get_full_path("assets/w_n.png"))
+        bishop_image = PhotoImage(file=get_full_path("assets/w_b.png"))
+        rook_image = PhotoImage(file=get_full_path("assets/w_r.png"))
+
+    else:
+        queen_image = PhotoImage(file=get_full_path("assets/b_q.png"))
+        knight_image = PhotoImage(file=get_full_path("assets/b_n.png"))
+        bishop_image = PhotoImage(file=get_full_path("assets/b_b.png"))
+        rook_image = PhotoImage(file=get_full_path("assets/b_r.png"))
+
+
+    buttn1 = Button(
+        frame,
+        image=queen_image,
+        width=60,
+        height=60,
+        border=0,
+        background=theme.text_primary,
+        command=lambda: set_choice("Q", frame),
+    )
+    buttn2 = Button(
+        frame,
+        image=knight_image,
+        width=60,
+        height=60,
+        border=0,
+        background=theme.text_primary,
+        command=lambda: set_choice("N", frame),
+    )
+    buttn3 = Button(
+        frame,
+        image=bishop_image,
+        width=60,
+        height=60,
+        border=0,
+        background=theme.text_primary,
+        command=lambda: set_choice("B", frame),
+    )
+    buttn4 = Button(
+        frame,
+        image=rook_image,
+        width=60,
+        height=60,
+        border=0,
+        background=theme.text_primary,
+        command=lambda: set_choice("R", frame),
+    )
+
+    buttn1.grid(row=0, column=0, padx=5)
+    buttn2.grid(row=0, column=1, padx=5)
+    buttn3.grid(row=0, column=2, padx=5)
+    buttn4.grid(row=0, column=3, padx=5)

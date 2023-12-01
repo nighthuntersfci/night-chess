@@ -2,7 +2,7 @@ from tkinter import *
 import data
 import theme
 import socket_service
-from utils.pieces import is_in_danger
+from utils.pieces import *
 
 # Pieces
 from pieces.Blank import Blank
@@ -226,72 +226,42 @@ class ChessWindow(Frame):
 
                         self.checked = False
 
+                        self.render()
+
                         if (
                             isinstance(self.game_pieces[x][y], Pawn)
                             and x == 7
                             and self.game_pieces[x][y].color == "W"
-                        ):
-                            self.game_pieces[x][y] = Queen(x, y, "W")
-                        elif (
+                        ) or (
                             isinstance(self.game_pieces[x][y], Pawn)
                             and x == 0
                             and self.game_pieces[x][y].color == "B"
                         ):
-                            self.game_pieces[x][y] = Queen(x, y, "B")
 
-                        self.about_to_move = False
-                        self.about_to_move_piece = None
+                            def set_choice(choice, frame):
+                                if choice == "Q":
+                                    self.game_pieces[x][y] = Queen(
+                                        x, y, self.game_pieces[x][y].color
+                                    )
+                                elif choice == "N":
+                                    self.game_pieces[x][y] = Knight(
+                                        x, y, self.game_pieces[x][y].color
+                                    )
+                                elif choice == "B":
+                                    self.game_pieces[x][y] = Bishop(
+                                        x, y, self.game_pieces[x][y].color
+                                    )
+                                elif choice == "R":
+                                    self.game_pieces[x][y] = Rook(
+                                        x, y, self.game_pieces[x][y].color
+                                    )
 
-                        socket_service.sio.emit(
-                            "update_board",
-                            {"id": data.current_room, "data": self.get_piece_data()},
-                        )
+                                frame.destroy()
+                                self.after_movement()
 
-                        self.render()
-
-                        # Check if won
-                        for i in range(8):
-                            for j in range(8):
-                                if isinstance(self.game_pieces[i][j], King) and (
-                                    (self.is_black and self.game_pieces[i][j].color == "W")
-                                    or (not self.is_black and self.game_pieces[i][j].color == "B")
-                                ):
-                                    if is_in_danger(
-                                        self.game_pieces[i][j].x,
-                                        self.game_pieces[i][j].y,
-                                        self.game_pieces[i][j].color,
-                                        self.game_pieces,
-                                    ):
-
-                                        if len(self.game_pieces[i][j].get_moves(self.game_pieces)) == 0:
-                                            root = Tk()
-                                            root.resizable(False, False)
-
-                                            frame = Frame(root, background=theme.background_primary)
-                                            frame.pack()
-
-                                            lb = Label(
-                                                frame,
-                                                text= "You won",
-                                                font=("Arial", 15),
-                                                background=theme.background_primary,
-                                                foreground=theme.text_primary,
-                                            )
-                                            lb2 = Label(
-                                                frame,
-                                                text= "Game Over",
-                                                font=("Arial", 15),
-                                                background=theme.background_primary,
-                                                foreground=theme.text_primary,
-                                            )
-                                            lb.pack()
-                                            lb2.pack()
-
-                                            root.mainloop()
-
-
-
-                        
+                            promote_pawn(self, self.game_pieces[x][y].color, set_choice)
+                        else:
+                            self.after_movement()
 
     def get_piece_data(self):
         piece_data = [[], [], [], [], [], [], [], []]
@@ -367,28 +337,24 @@ class ChessWindow(Frame):
                     ):
                         self.checked = True
 
-                        if len(self.game_pieces[i][j].get_moves(self.game_pieces)) == 0:
-                            root = Tk()
-                            root.resizable(False, False)
+                        check_for_end(i, j, self.game_pieces, False)
 
-                            frame = Frame(root, background=theme.background_primary)
-                            frame.pack()
+    def after_movement(self):
+        self.about_to_move = False
+        self.about_to_move_piece = None
 
-                            lb = Label(
-                                frame,
-                                text= "You Lost",
-                                font=("Arial", 15),
-                                background=theme.background_primary,
-                                foreground=theme.text_primary,
-                            )
-                            lb2 = Label(
-                                frame,
-                                text= "Game Over",
-                                font=("Arial", 15),
-                                background=theme.background_primary,
-                                foreground=theme.text_primary,
-                            )
-                            lb.pack()
-                            lb2.pack()
+        socket_service.sio.emit(
+            "update_board",
+            {"id": data.current_room, "data": self.get_piece_data()},
+        )
 
-                            root.mainloop()
+        self.render()
+
+        # Check if won
+        for i in range(8):
+            for j in range(8):
+                if isinstance(self.game_pieces[i][j], King) and (
+                    (self.is_black and self.game_pieces[i][j].color == "W")
+                    or (not self.is_black and self.game_pieces[i][j].color == "B")
+                ):
+                    check_for_end(i, j, self.game_pieces, True)
