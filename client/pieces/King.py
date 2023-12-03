@@ -1,4 +1,5 @@
 from pieces.Piece import Piece
+from pieces.Blank import Blank
 from utils.pieces import is_in_danger
 
 class King(Piece):
@@ -13,6 +14,8 @@ class King(Piece):
         for i in possible_moves:
             if 0 <= self.x + i[0] <= 7 and 0 <= self.y + i[1] <= 7:
                 if self.color != data[self.x + i[0]][self.y + i[1]].color:
-                    if not is_in_danger(self.x + i[0], self.y + i[1], self.color, data): 
+                    data_snapshot = data
+                    data_snapshot[self.x][self.y] = Blank(self.x, self.y, self.color)
+                    if not is_in_danger(self.x + i[0], self.y + i[1], self.color, data_snapshot): 
                         moves.append(i)
         return moves
