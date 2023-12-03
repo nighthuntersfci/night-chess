@@ -128,17 +128,20 @@ def is_in_danger(x, y, color, data):
 
     if not_in_danger == True:
         if color == "W":
-            if (
-                isinstance(data[x + 1][y + 1], Pawn)
-                or isinstance(data[x + 1][y - 1], Pawn)
-            ) and (data[x + 1][y + 1].color == "B" or data[x + 1][y - 1].color == "B"):
-                not_in_danger = False
-        else:
-            if (
-                isinstance(data[x - 1][y + 1], Pawn)
-                or isinstance(data[x - 1][y - 1], Pawn)
-            ) and (data[x - 1][y + 1].color == "W" or data[x - 1][y - 1].color == "W"):
-                not_in_danger = False
+            if 0 <= x + 1 <= 7 and 0 <= y + 1 <= 7 and 0 <= y - 1 <= 7:
+                if (
+                    isinstance(data[x + 1][y + 1], Pawn)
+                    or isinstance(data[x + 1][y - 1], Pawn)
+                ) and (data[x + 1][y + 1].color == "B" or data[x + 1][y - 1].color == "B"):
+                    not_in_danger = False
+            else:
+                
+                if 0 <= x - 1 <= 7 and 0 <= y + 1 <= 7 and 0 <= y - 1 <= 7:
+                    if (
+                        isinstance(data[x - 1][y + 1], Pawn)
+                        or isinstance(data[x - 1][y - 1], Pawn)
+                    ) and (data[x - 1][y + 1].color == "W" or data[x - 1][y - 1].color == "W"):
+                        not_in_danger = False
 
     return not not_in_danger
 
