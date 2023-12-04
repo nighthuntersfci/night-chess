@@ -2,6 +2,7 @@
 from tkinter import *
 import threading
 import socket_service
+import os
 
 # Theme
 import theme
@@ -16,6 +17,7 @@ def gui_thread():
     root.title("Night Chess: Local Multiplayer")
     root.resizable(False, False)
     root.configure(background=theme.background_primary)
+    root.wm_iconphoto(False, PhotoImage(file=os.path.join(os.path.dirname(__file__), "icon.png")))
 
     Intro(root)
 
