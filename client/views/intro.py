@@ -13,14 +13,18 @@ class Intro(Frame):
         self.parent = parent
 
         # Top Bar
-        top = Frame(self, background=theme.background_secondary)
-        top.pack(fill=X, side="top")
+        top = Frame(self, background=theme.background_primary)
+        top.pack(fill=X, side="top", pady=(100, 20))
         top.grid_columnconfigure(0, weight=1)
         top.grid_columnconfigure(2, weight=1)
+        
+        self.logo=PhotoImage(file=get_full_path("assets/logo.png"))
 
         Label(
             top,
-            image=PhotoImage(file=get_full_path("assets/logo.png"))
+            image=self.logo,
+            borderwidth=0,
+            highlightthickness=0
         ).grid(row=0, column=1)
 
         prompt = Frame(self, background=theme.background_primary)
@@ -28,7 +32,7 @@ class Intro(Frame):
         prompt.grid_columnconfigure(0, weight=1)
         prompt.grid_columnconfigure(2, weight=1)
         prompt.grid_rowconfigure(0, weight=1)
-        prompt.grid_rowconfigure(4, weight=1)
+        prompt.grid_rowconfigure(4, weight=5)
 
         self.name = StringVar()
 
