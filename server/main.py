@@ -11,6 +11,20 @@ def connect(sid, environ):
 	sio.emit("update_rooms", data.rooms, room=sid)
 
 @sio.event
+def disconnect(sid):
+    print("User disconnected:", sid)
+    
+    for i in data.rooms: 
+        if i["players"] != None:
+            for j in i["players"]:    
+                if sid == j["id"]:
+                    i["players"].remove(j)
+                    if len(i["players"]) == 0:
+                        print("Room has been deleted")
+                        data.rooms.remove(i)
+
+
+@sio.event
 def set_name(sid, name):
 	print("Socket " + sid + " name set: " + name)
 	data.usernames[sid] = name
