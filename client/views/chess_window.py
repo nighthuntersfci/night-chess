@@ -3,6 +3,8 @@ import data
 import theme
 import socket_service
 from utils.pieces import *
+from utils.paths import *
+from playsound import playsound
 
 # Pieces
 from pieces.Blank import Blank
@@ -364,3 +366,8 @@ class ChessWindow(Frame):
                         self.game_pieces,
                     ):
                         check_for_end(i, j, self.game_pieces, True)
+
+        try:
+            playsound(get_full_path("assets/move.wav"))
+        except Exception as e:
+            print("Error playing sound", e)
