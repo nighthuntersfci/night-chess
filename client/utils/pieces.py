@@ -10,11 +10,18 @@ import theme
 from utils.paths import get_full_path
 
 
-def is_in_danger(x, y, color, data):
+def is_in_danger(x, y, color, game_data):
     not_in_danger = True
+    data = [[], [], [], [], [], [], [], []]
+
+    for i in range(8):
+        for j in range(8):
+            data[i].append(game_data[i][j])
+
+    data[x][y] = Blank(x, y)
 
     # Vertical Movement
-    for k in range(1, 7):
+    for k in range(1, 8):
         if 0 <= x + k <= 7:
             if (
                 isinstance(data[x + k][y], Queen) or isinstance(data[x + k][y], Rook)
@@ -25,7 +32,7 @@ def is_in_danger(x, y, color, data):
                 break
 
     if not_in_danger == True:
-        for k in range(1, 7):
+        for k in range(1, 8):
             if 0 <= x - k <= 7:
                 if (
                     isinstance(data[x - k][y], Queen)
@@ -38,7 +45,7 @@ def is_in_danger(x, y, color, data):
 
     # Horizontal Movement
     if not_in_danger == True:
-        for k in range(1, 7):
+        for k in range(1, 8):
             if 0 <= y + k <= 7:
                 if (
                     isinstance(data[x][y + k], Queen)
@@ -50,7 +57,7 @@ def is_in_danger(x, y, color, data):
                     break
 
     if not_in_danger == True:
-        for k in range(1, 7):
+        for k in range(1, 8):
             if 0 <= y - k <= 7:
                 if (
                     isinstance(data[x][y - k], Queen)
@@ -63,7 +70,7 @@ def is_in_danger(x, y, color, data):
 
     # Diagonal
     if not_in_danger == True:
-        for k in range(1, 7):
+        for k in range(1, 8):
             if 0 <= y + k <= 7 and 0 <= x + k <= 7:
                 if (
                     isinstance(data[x + k][y + k], Queen)
@@ -75,7 +82,7 @@ def is_in_danger(x, y, color, data):
                     break
 
     if not_in_danger == True:
-        for k in range(1, 7):
+        for k in range(1, 8):
             if 0 <= y - k <= 7 and 0 <= x + k <= 7:
                 if (
                     isinstance(data[x + k][y - k], Queen)
@@ -87,7 +94,7 @@ def is_in_danger(x, y, color, data):
                     break
 
     if not_in_danger == True:
-        for k in range(1, 7):
+        for k in range(1, 8):
             if 0 <= y - k <= 7 and 0 <= x - k <= 7:
                 if (
                     isinstance(data[x - k][y - k], Queen)
@@ -99,7 +106,7 @@ def is_in_danger(x, y, color, data):
                     break
 
     if not_in_danger == True:
-        for k in range(1, 7):
+        for k in range(1, 8):
             if 0 <= y + k <= 7 and 0 <= x - k <= 7:
                 if (
                     isinstance(data[x - k][y + k], Queen)
@@ -128,17 +135,24 @@ def is_in_danger(x, y, color, data):
 
     if not_in_danger == True:
         if color == "W":
-            if (
-                isinstance(data[x + 1][y + 1], Pawn)
-                or isinstance(data[x + 1][y - 1], Pawn)
-            ) and (data[x + 1][y + 1].color == "B" or data[x + 1][y - 1].color == "B"):
-                not_in_danger = False
-        else:
-            if (
-                isinstance(data[x - 1][y + 1], Pawn)
-                or isinstance(data[x - 1][y - 1], Pawn)
-            ) and (data[x - 1][y + 1].color == "W" or data[x - 1][y - 1].color == "W"):
-                not_in_danger = False
+            if 0 <= x + 1 <= 7 and 0 <= y + 1 <= 7 and 0 <= y - 1 <= 7:
+                if (
+                    isinstance(data[x + 1][y + 1], Pawn)
+                    or isinstance(data[x + 1][y - 1], Pawn)
+                ) and (
+                    data[x + 1][y + 1].color == "B" or data[x + 1][y - 1].color == "B"
+                ):
+                    not_in_danger = False
+            else:
+                if 0 <= x - 1 <= 7 and 0 <= y + 1 <= 7 and 0 <= y - 1 <= 7:
+                    if (
+                        isinstance(data[x - 1][y + 1], Pawn)
+                        or isinstance(data[x - 1][y - 1], Pawn)
+                    ) and (
+                        data[x - 1][y + 1].color == "W"
+                        or data[x - 1][y - 1].color == "W"
+                    ):
+                        not_in_danger = False
 
     return not not_in_danger
 
@@ -194,7 +208,7 @@ def promote_pawn(parent, color, set_choice):
     global bishop_image
     global rook_image
 
-    if color == 'W':
+    if color == "W":
         queen_image = PhotoImage(file=get_full_path("assets/w_q.png"))
         knight_image = PhotoImage(file=get_full_path("assets/w_n.png"))
         bishop_image = PhotoImage(file=get_full_path("assets/w_b.png"))
@@ -205,7 +219,6 @@ def promote_pawn(parent, color, set_choice):
         knight_image = PhotoImage(file=get_full_path("assets/b_n.png"))
         bishop_image = PhotoImage(file=get_full_path("assets/b_b.png"))
         rook_image = PhotoImage(file=get_full_path("assets/b_r.png"))
-
 
     buttn1 = Button(
         frame,
