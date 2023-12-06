@@ -3,7 +3,7 @@ import socket_service
 import theme
 import data
 from views.rooms import Rooms
-
+from utils.paths import get_full_path
 
 class Intro(Frame):
     def __init__(self, parent):
@@ -13,32 +13,26 @@ class Intro(Frame):
         self.parent = parent
 
         # Top Bar
-        top = Frame(self, background=theme.background_secondary)
-        top.pack(fill=X, side="top")
+        top = Frame(self, background=theme.background_primary)
+        top.pack(fill=X, side="top", pady=(100, 20))
         top.grid_columnconfigure(0, weight=1)
         top.grid_columnconfigure(2, weight=1)
+        
+        self.logo=PhotoImage(file=get_full_path("assets/logo.png"))
 
         Label(
             top,
-            text="Night Chess",
-            background=theme.background_secondary,
-            foreground=theme.text_primary,
-            font=("Arial", 20),
-        ).grid(row=0, column=1, pady=(10, 0))
-        Label(
-            top,
-            text="By Night Hunters",
-            background=theme.background_secondary,
-            foreground=theme.text_secondary,
-            font=("Arial", 10),
-        ).grid(row=1, column=1, pady=(0, 10))
+            image=self.logo,
+            borderwidth=0,
+            highlightthickness=0
+        ).grid(row=0, column=1)
 
         prompt = Frame(self, background=theme.background_primary)
         prompt.pack(fill=BOTH, expand=True, side="bottom")
         prompt.grid_columnconfigure(0, weight=1)
         prompt.grid_columnconfigure(2, weight=1)
         prompt.grid_rowconfigure(0, weight=1)
-        prompt.grid_rowconfigure(4, weight=1)
+        prompt.grid_rowconfigure(4, weight=5)
 
         self.name = StringVar()
 
