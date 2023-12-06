@@ -15,7 +15,7 @@ class King(Piece):
             if 0 <= self.x + i[0] <= 7 and 0 <= self.y + i[1] <= 7:
                 if self.color != data[self.x + i[0]][self.y + i[1]].color:
                     data_snapshot = data
-                    data_snapshot[self.x][self.y] = Blank(self.x, self.y, self.color)
+                    data_snapshot[self.x][self.y] = Blank(self.x, self.y)
                     if not is_in_danger(self.x + i[0], self.y + i[1], self.color, data_snapshot): 
                         moves.append(i)
         return moves
