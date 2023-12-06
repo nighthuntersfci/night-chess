@@ -6,7 +6,8 @@ Local multiplayer chess game for OOP class
 ## Requirements
 - `eventlet`
 - `python-socketio`
-- `tkinter` 
+- `tkinter`
+- `playsound`
 
 ## Credits
 - Mohamed "Salint" Eldahtoury
