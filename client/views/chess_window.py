@@ -338,7 +338,10 @@ class ChessWindow(Frame):
                         self.game_pieces,
                     ):
                         self.checked = True
-
+                        try:
+                            playsound(get_full_path("assets/checkmate.wav")) 
+                        except Exception as e:
+                             print("Error playing sound", e)
                         check_for_end(i, j, self.game_pieces, False)
 
     def after_movement(self):
