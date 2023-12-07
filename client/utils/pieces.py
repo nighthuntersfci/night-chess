@@ -4,6 +4,8 @@ from pieces.Bishop import Bishop
 from pieces.Knight import Knight
 from pieces.Pawn import Pawn
 from pieces.Blank import Blank
+import views
+import data 
 
 from tkinter import *
 import theme
@@ -156,6 +158,14 @@ def is_in_danger(x, y, color, game_data):
 
     return not not_in_danger
 
+def restart(root):
+    
+    data.rooms_window = views.rooms.Rooms(data.room_window.parent)
+    data.room_window.destroy()
+    del data.room_window
+    data.room_window = None
+    root.destroy()
+
 
 def check_for_end(i, j, data, won):
     if len(data[i][j].get_moves(data)) == 0:
@@ -195,6 +205,8 @@ def check_for_end(i, j, data, won):
         )
         lb.grid(row=1, column=1)
         lb2.grid(row=2, column=1)
+
+        Button(frame, text="play Again", command=lambda root=root : restart(root)).grid(row=3 , column=1)
 
         root.mainloop()
 
