@@ -186,7 +186,7 @@ def check_for_end(i, j, data, won):
                 text="You Lost",
                 font=("Arial", 60),
                 background=theme.background_primary,
-                foreground="#0e0ed4",
+                foreground="red",
             )
         else:
             lb = Label(
@@ -206,7 +206,18 @@ def check_for_end(i, j, data, won):
         lb.grid(row=1, column=1)
         lb2.grid(row=2, column=1)
 
-        Button(frame, text="play Again", command=lambda root=root : restart(root)).grid(row=3 , column=1)
+        bt = Button(frame,
+            text="Play Again",
+            background=theme.color_primary,
+            foreground=theme.text_primary,
+            border="1",
+            width=10,
+            height=2, 
+            font=('Arial',12),
+            activebackground=theme.color_secondary,
+            activeforeground=theme.text_primary, 
+            command=lambda root=root : restart(root))
+        bt.grid(row=3 , column=1)
 
         root.mainloop()
 
