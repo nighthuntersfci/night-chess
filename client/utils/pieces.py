@@ -4,6 +4,7 @@ from pieces.Bishop import Bishop
 from pieces.Knight import Knight
 from pieces.Pawn import Pawn
 from pieces.Blank import Blank
+from playsound import playsound
 import views
 import data 
 
@@ -188,6 +189,10 @@ def check_for_end(i, j, data, won):
                 background=theme.background_primary,
                 foreground="red",
             )
+            try:
+                playsound(get_full_path("assets/lose.wav"))
+            except Exception as e:
+                print("Error playing lose sound ", e)
         else:
             lb = Label(
                 frame,
@@ -196,6 +201,10 @@ def check_for_end(i, j, data, won):
                 background=theme.background_primary,
                 foreground="#0e0ed4",
             )
+            try:
+                playsound(get_full_path("assets/win.mp3"))
+            except Exception as e:
+                print("Error playing win sound", e)
         lb2 = Label(
             frame,
             text="Game Over",
