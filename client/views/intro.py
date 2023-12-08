@@ -67,7 +67,14 @@ class Intro(Frame):
         ).grid(row=3, column=1, pady=20)
 
     def set_username(self, event=0):
-        if len(self.name.get()) <= 8:
+        if self.name.get() == "":   
+            error = Label(
+                self,
+                text="Your name can't be empty.",
+                font=("Arial", 18),
+            )
+            error.pack()
+        elif len(self.name.get()) <= 8:
             socket_service.set_username(self.name.get())
             data.name = self.name.get()
 
